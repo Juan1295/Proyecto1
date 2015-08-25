@@ -1,3 +1,4 @@
+
 #include <stdio.h>
 #include <stdlib.h>
 #include "micros.h"
@@ -13,8 +14,8 @@ int main()
     long int reg[12]; int i;
 
     for(i=0;i<12;i++)
-        reg[i]=0;
-    registro(reg);
+        reg[i]=0; //Los registros toman el valor de 0.
+    registro(reg);//Se invoca la funcion registro.
 
 	return 0;
 }

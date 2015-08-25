@@ -15,8 +15,8 @@ void registro(long int reg[12])
 	{
 	    for(j=0;j<3;j++)
         {
-            printf("%.8x\t",reg[i]);
+            printf("%.8x\t",reg[i]);//Imprime en pantalla 3 registros. 
         }
-        printf("\n");
+        printf("\n");//Salta de linea despues de imprimir los 3 registros.
 	}
 }

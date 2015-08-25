@@ -1,4 +1,4 @@
-#include <stdio.h>
+#include <stdio.h> 
 #include <stdlib.h>
 #include "funciones.h"
 /**
@@ -10,7 +10,7 @@
 */
 void AND(long int *rx,long int rn,long int rm)
 {
-    *rx=rn&rm;
+    *rx=rn&rm;//Se hace la operacion logica AND entre los registros.
 }
 
 /**
@@ -22,7 +22,7 @@ void AND(long int *rx,long int rn,long int rm)
 */
 void ORR(long int *rx,long int rn,long int rm)
 {
-    *rx=rn|rm;
+    *rx=rn|rm;//Se hace la operacion logica OR entre los registros.
 }
 
 /**
@@ -34,7 +34,7 @@ void ORR(long int *rx,long int rn,long int rm)
 */
 void EOR(long int *rx,long int rn,long int rm)
 {
-    *rx=rn^rm;
+    *rx=rn^rm;//Se hace la operacion logica AND entre los registros.
 }
 
 /**
@@ -45,7 +45,7 @@ void EOR(long int *rx,long int rn,long int rm)
 */
 void MOV(long int *rx,long int rn)
 {
-   *rx=rn;
+   *rx=rn;//Se copia rn en la direccion del registro rx.
 }
 
 /**
@@ -57,5 +57,5 @@ void MOV(long int *rx,long int rn)
 */
 void SUB(long int *rx,long int rn,long int rm)
 {
-  *rx=rn-rm;
+  *rx=rn-rm;//Se restan dos registros.
 }
