@@ -1,6 +1,13 @@
-#ifndef REGISTRO_H_INCLUDED
-#define REGISTRO_H_INCLUDED
+#ifndef _SCREEN_H_
+#define	_SCREEN_H_
+# include  <stdio.h>
+# include  <stdlib.h>
+# include  <stdint.h>
+# include  <windows.h>
 
-void registro(long int reg[12]); //Se define la funcion registro.
+#include  "colors.h"
+
+
+void registro(uint32_t reg[],size_t dim); //Se define la funcion registro.
 
 #endif // REGISTRO_H_INCLUDED
