@@ -1,21 +1,15 @@
-
 #include <stdio.h>
 #include <stdlib.h>
 #include "micros.h"
-#include "funciones.h"
+
+//Se crea el main para probar el programa
 /**
-* \brief Cuerpo principal del programa.
-* \param reg[12] Arreglo de 12 enteros largos.
-* \param i Variable para el primer ciclo for.
-* \return Retorna 0 cuando se finaliza el programa.
+* \param se define reg[12] como Arreglo de 12 enteros largos.
+* \return No retorna ningun parametro.
 */
-int main()
+int main(void)
 {
-    long int reg[12]; int i;
-
-    for(i=0;i<12;i++)
-        reg[i]=0; //Los registros toman el valor de 0.
-    registro(reg);//Se invoca la funcion registro.
-
+	uint32_t reg[12];
+	registro(reg,12);// Se llama a la función registro.
 	return 0;
 }
