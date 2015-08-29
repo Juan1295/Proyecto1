@@ -38,3 +38,35 @@ void SUB(uint32_t *rx,uint32_t rn,uint32_t rm,struct flg *banderas)//Se define l
   *rx=rn-rm;//Se restan dos registros.
   flags(*rx,rn,rm,banderas);//Se llama la función para las banderas
 }
+
+void ADD(uint32_t *rx, uint32_t rn, uint32_t rm, struct flg *banderas)//Se define la funcion Suma
+{
+    *rx=rn+rm;//Se suman dos registros.
+    flags(*rx,rn,rm,banderas);// Se llama la funcion para las banderas.
+}
+void CMN(uint32_t rn,uint32_t rm,struct flg *banderas)//Funcion que suma pero no guarda el resultado, solo modifica banderas.
+{
+    uint32_t rx;// Se define una variable local RX para no retornar el resultado
+    rx=rn+rm;// Se suman los registros.
+    flags(rx,rn,rm,banderas);// Se modifican las banderas.
+}
+
+void CMP(uint32_t rn,uint32_t rm,struct flg *banderas)//Funcion que no retorna resultado pero que modifica banderas
+{
+    uint32_t rx;
+    rx=rn-rm;//Resta el registro rn con el registro rm
+    flags(rx,rn,rm,banderas);// Se modifican las banderas.
+}
+
+void MUL(uint32_t *rx,uint32_t rn, uint32_t rm, struct flg *banderas)//Funcion que multiplica dos registros
+{
+    *rx=rn*rm;//Se multiplican los registros y se almacenan en rx
+    flags(*rx,rn,rm,banderas);//Se modifican las banderas
+}
+
+void TST(uint32_t rn,uint32_t rm, struct flg *banderas)// Funcion que hace una AND entre los registros pero no guarda el resultado.
+{
+    uint32_t rx;
+    rx=rn|rm;//AND entre los registros.
+    flags(rx,rn,rm,banderas);//Se modifican las banderas
+}
