@@ -4,7 +4,9 @@
 
 void flags(uint32_t rx,uint32_t rn, uint32_t rm,struct flg *punt)
 {
-    uint32_t numero = 2147483648;
+    uint32_t numero;
+    numero=0;
+    numero=numero|(1<<31);
 
     //Condicion para el numero negativo.
     if((1<<31)&rx)

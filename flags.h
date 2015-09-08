@@ -1,5 +1,5 @@
 #include<stdint.h>
-#include<stdbool.h>
+#include "funciones.h"
 
 /**
 * \brief Funcion que  .
@@ -8,12 +8,5 @@
 * \param rx Registro donde se almacena la operacion AND.
 * \return No retorna.
 */
-    struct flg //se define una estructura para las banderas.
-    {
-        bool negativo;
-        bool zero;
-        bool carry;
-        bool sobreflujo;
-    };
 
 void flags(uint32_t rx,uint32_t rn, uint32_t rm,struct flg *punt);//Se declara la función variable

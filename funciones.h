@@ -1,5 +1,12 @@
-#include<stdint.h>
-#include "flags.h"
+#include <stdint.h>
+
+    struct flg //se define una estructura para las banderas.
+    {
+        char negativo;
+        char zero;
+        char carry;
+        char sobreflujo;
+    };
 
 /**
 * \brief Funcion logica AND para dos registros .
