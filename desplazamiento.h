@@ -1,6 +1,6 @@
 #include <stdint.h>
 #include <math.h>
-#include "flags.h"//Se define la libreria para trabajar las banderas.
+
 //Se crea la funcion LSL.
 /**
 * \brief Función de desplazamientos a la izquierda.
@@ -9,7 +9,7 @@
 * \return No retorna ningun parametro.
 */
 
-void LSL(uint32_t *rx,uint32_t ra,struct flg *banderas);
+void LSL(uint32_t *rx,uint32_t ra);
 
 //Se crea la funcion LSR.
 /**
@@ -19,7 +19,7 @@ void LSL(uint32_t *rx,uint32_t ra,struct flg *banderas);
 * \return No retorna ningun parametro.
 */
 
-void LSR(uint32_t *rx,uint32_t ra,struct flg *banderas);
+void LSR(uint32_t *rx,uint32_t ra);
 
 //Se crea la funcion rotar.
 /**
@@ -29,7 +29,7 @@ void LSR(uint32_t *rx,uint32_t ra,struct flg *banderas);
 * \return No retorna ningun parametro.
 */
 
-void ROR(uint32_t *rx,uint32_t ra,struct flg *banderas);
+void ROR(uint32_t *rx,uint32_t ra);
 
 //Se crea la funcion de desplazar a la derecha conservando el signo.
 /**
@@ -39,7 +39,7 @@ void ROR(uint32_t *rx,uint32_t ra,struct flg *banderas);
 * \return No retorna ningun parametro.
 */
 
-void ASR(uint32_t *rx,uint32_t ra,struct flg *banderas);
+void ASR(uint32_t *rx,uint32_t ra);
 
 //Se crea la funcion bit clear.
 /**
@@ -49,7 +49,7 @@ void ASR(uint32_t *rx,uint32_t ra,struct flg *banderas);
 * \return No retorna ningun parametro.
 */
 
-void BIC (uint32_t *rx,uint32_t ra,struct flg *banderas);
+void BIC (uint32_t *rx,uint32_t ra);
 
 //Se crea la funcion que guarda el complemento de un registro.
 /**
@@ -59,7 +59,7 @@ void BIC (uint32_t *rx,uint32_t ra,struct flg *banderas);
 * \return No retorna ningun parametro.
 */
 
-void MVN (uint32_t *rx,uint32_t ra,struct flg *banderas);
+void MVN (uint32_t *rx,uint32_t ra);
 
 //Se crea la funcion complemento a dos.
 /**
@@ -69,12 +69,36 @@ void MVN (uint32_t *rx,uint32_t ra,struct flg *banderas);
 * \return No retorna ningun parametro.
 */
 
-void RSB(uint32_t *rx,uint32_t,struct flg *banderas);
+void RSB(uint32_t *rx,uint32_t);
 
 //Se crea la funcion que no hace nada.
 /**
-* \brief Función que no ahce nada.
+* \brief Función que no hace nada.
 * \return No retorna ningun parametro.
 */
 
 void NOP();
+
+//Se crea la funcion REV que intercambia bytes.
+/**
+* \brief Función que intercambia bytes, el superior con el inferior y los del medio entre ellos.
+* \return No retorna ningun parametro.
+*/
+
+void REV(uint32_t *rx,uint32_t ra);
+
+//Se crea la funcion REV que intercambia 16 bits.
+/**
+* \brief Función que intercambia la mitad de un registro por su otra mitad.
+* \return No retorna ningun parametro.
+*/
+
+void REV16(uint32_t *rx,uint32_t ra);
+
+//Se crea la funcion REVSH que intercambia los dos bytes inferiores y extiende el signo.
+/**
+* \brief Función que intercambia los dos bytes inferiores y extiende el signo.
+* \return No retorna ningun parametro.
+*/
+
+void REVSH(uint32_t *rx,uint32_t ra);
