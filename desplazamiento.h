@@ -1,6 +1,6 @@
 #include <stdint.h>
 #include <math.h>
-
+#include "flags.h"//Se define la libreria para trabajar las banderas.
 //Se crea la funcion LSL.
 /**
 * \brief Función de desplazamientos a la izquierda.
@@ -9,7 +9,7 @@
 * \return No retorna ningun parametro.
 */
 
-void LSL(uint32_t *rx,uint32_t ra);
+void LSL(uint32_t *rx,uint32_t ra,struct flg *banderas);
 
 //Se crea la funcion LSR.
 /**
@@ -19,7 +19,7 @@ void LSL(uint32_t *rx,uint32_t ra);
 * \return No retorna ningun parametro.
 */
 
-void LSR(uint32_t *rx,uint32_t ra);
+void LSR(uint32_t *rx,uint32_t ra,struct flg *banderas);
 
 //Se crea la funcion rotar.
 /**
@@ -29,7 +29,7 @@ void LSR(uint32_t *rx,uint32_t ra);
 * \return No retorna ningun parametro.
 */
 
-void ROR(uint32_t *rx,uint32_t ra);
+void ROR(uint32_t *rx,uint32_t ra,struct flg *banderas);
 
 //Se crea la funcion de desplazar a la derecha conservando el signo.
 /**
@@ -39,7 +39,7 @@ void ROR(uint32_t *rx,uint32_t ra);
 * \return No retorna ningun parametro.
 */
 
-void ASR(uint32_t *rx,uint32_t ra);
+void ASR(uint32_t *rx,uint32_t ra,struct flg *banderas);
 
 //Se crea la funcion bit clear.
 /**
@@ -49,7 +49,7 @@ void ASR(uint32_t *rx,uint32_t ra);
 * \return No retorna ningun parametro.
 */
 
-void BIC (uint32_t *rx,uint32_t ra);
+void BIC (uint32_t *rx,uint32_t ra,struct flg *banderas);
 
 //Se crea la funcion que guarda el complemento de un registro.
 /**
@@ -59,7 +59,7 @@ void BIC (uint32_t *rx,uint32_t ra);
 * \return No retorna ningun parametro.
 */
 
-void MVN (uint32_t *rx,uint32_t ra);
+void MVN (uint32_t *rx,uint32_t ra,struct flg *banderas);
 
 //Se crea la funcion complemento a dos.
 /**
@@ -69,7 +69,7 @@ void MVN (uint32_t *rx,uint32_t ra);
 * \return No retorna ningun parametro.
 */
 
-void RSB(uint32_t *rx,uint32_t);
+void RSB(uint32_t *rx,uint32_t,struct flg *banderas);
 
 //Se crea la funcion que no hace nada.
 /**
