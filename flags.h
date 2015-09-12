@@ -1,5 +1,6 @@
 #include<stdint.h>
-#include "funciones.h"
+#include "desplazamiento.h"
+
 
 /**
 * \brief Funcion que  .
@@ -10,3 +11,7 @@
 */
 
 void flags(uint32_t rx,uint32_t rn, uint32_t rm,struct flg *punt);//Se declara la función variable
+
+void flags_logica(uint32_t rx,uint32_t rn, uint32_t rm,struct flg *punt);
+
+void flags_desplazamiento(uint32_t rx,uint32_t rn, uint32_t rm,struct flg *punt);

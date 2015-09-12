@@ -45,3 +45,55 @@ void flags(uint32_t rx,uint32_t rn, uint32_t rm,struct flg *punt)
         punt->sobreflujo=0;
     }
 }
+
+void flags_logica(uint32_t rx,uint32_t rn, uint32_t rm,struct flg *punt)
+{
+    uint32_t numero;
+    numero=0;
+    numero=numero|(1<<31);
+
+    //Condicion para el numero negativo.
+    if((1<<31)&rx)
+    {
+        punt->negativo=1;
+    }
+    else
+    {
+        punt->negativo=0;
+    }
+    //Condicion para la bandera cero.
+    if(rx==0)
+    {
+        punt->zero=1;
+    }
+    else
+    {
+        punt->zero=0;
+    }
+}
+
+void flags_desplazamiento(uint32_t rx,uint32_t rn, uint32_t rm,struct flg *punt)
+{
+    uint32_t numero;
+    numero=0;
+    numero=numero|(1<<31);
+
+    //Condicion para el numero negativo.
+    if((1<<31)&rx)
+    {
+        punt->negativo=1;
+    }
+    else
+    {
+        punt->negativo=0;
+    }
+    //Condicion para la bandera cero.
+    if(rx==0)
+    {
+        punt->zero=1;
+    }
+    else
+    {
+        punt->zero=0;
+    }
+}

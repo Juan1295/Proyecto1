@@ -7,7 +7,7 @@ void AND(uint32_t *rx,uint32_t rn,uint32_t rm,struct flg *banderas)//Se define l
 {
 
     *rx=rn&rm;//Se hace la operacion logica AND entre los registros.
-    flags(*rx,rn,rm,banderas);//Se llama la funcion para las banderas.
+    flags_logica(*rx,rn,rm,banderas);//Se llama la funcion para las banderas.
 
 }
 
@@ -16,14 +16,14 @@ void ORR(uint32_t *rx,uint32_t rn,uint32_t rm,struct flg *banderas)//Se define l
 {
 
     *rx=rn|rm;//Se hace la operacion logica OR entre los registros.
-    flags(*rx,rn,rm,banderas);//Se llama la funcion para las banderas.
+    flags_logica(*rx,rn,rm,banderas);//Se llama la funcion para las banderas.
 }
 
 
 void EOR(uint32_t *rx,uint32_t rn,uint32_t rm,struct flg *banderas)//Se define la función EXOR
 {
     *rx=rn^rm;//Se hace la operacion logica AND entre los registros.
-    flags(*rx,rn,rm,banderas);//Se llama la función para las banderas
+    flags_logica(*rx,rn,rm,banderas);//Se llama la función para las banderas
 }
 
 
@@ -67,6 +67,6 @@ void MUL(uint32_t *rx,uint32_t rn, uint32_t rm, struct flg *banderas)//Funcion q
 void TST(uint32_t rn,uint32_t rm, struct flg *banderas)// Funcion que hace una AND entre los registros pero no guarda el resultado.
 {
     uint32_t rx;
-    rx=rn|rm;//AND entre los registros.
-    flags(rx,rn,rm,banderas);//Se modifican las banderas
+    rx=rn&rm;//AND entre los registros.
+    flags_logica(rx,rn,rm,banderas);//Se modifican las banderas
 }

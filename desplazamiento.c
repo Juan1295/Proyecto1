@@ -3,45 +3,54 @@
 #include <stdint.h>
 #include "desplazamiento.h"//Se definen librerias necesarias para la funcion
 
-void LSL(uint32_t *rx,uint32_t ra)
+void LSL(uint32_t *rx,uint32_t ra,struct flg *banderas)
 {
     *rx=*rx<<ra;//Operacion necesaria para desplazar a la izquierda.
+	flags_desplazamiento(*rx,0,0,banderas);//Se llaman las banderas para el desplazamiento
 }
 
-void LSR(uint32_t *rx,uint32_t ra)
+void LSR(uint32_t *rx,uint32_t ra,struct flg *banderas)
 {
     *rx=*rx>>ra;//Operacion necesaria para desplazar a la derecha.
+	flags_desplazamiento(*rx,0,0,banderas);//Se llaman las banderas para el desplazamiento
 }
 
-void ROR(uint32_t *rx, uint32_t ra)
+void ROR(uint32_t *rx, uint32_t ra,struct flg *banderas)
 {
   uint32_t aux1,aux2;//Variables auxiliares para la rotacion
   aux1=*rx>>ra;//Se guarda un corrimiento a la derecha en aux1 de *rx
   aux2=*rx<<(32-ra);//Se guarda un corrimiento a la izquierda en aux 2 de *rx
   *rx=aux1|aux2;//Se suman las aux para realizar la rotacion
+  
+  flags_desplazamiento(*rx,0,0,banderas,struct flg *banderas);//Se llaman las banderas para el desplazamiento
 }
 
-void ASR(uint32_t *rx,uint32_t ra)
+void ASR(uint32_t *rx,uint32_t ra,struct flg *banderas)
 {
     uint32_t aux;//Se define una variable auxiliar.
     aux=*rx&(1<<31);//Se guarda en el auxiliar el valor del bit mas significativo.
     *rx=*rx>>ra;//Se guarda en el registro el corrimiento pedido.
     *rx=*rx|aux;//Se adiere de nuevo el signo.
+	
+	flags_desplazamiento(*rx,0,0,banderas);//Se llaman las banderas para el desplazamiento
 }
 
-void BIC (uint32_t *rx,uint32_t ra)
+void BIC (uint32_t *rx,uint32_t ra,struct flg *banderas)
 {
     *rx&=~ra;//Negacion de ra y AND entre registros
+	flags_desplazamiento(*rx,0,0,banderas);//Se llaman las banderas para el desplazamiento
 }
 
-void MVN(uint32_t *rx,uint32_t ra)
+void MVN(uint32_t *rx,uint32_t ra,struct flg *banderas)
 {
     *rx=~ra;//Complemento de ra.
+	flags_desplazamiento(*rx,0,0,banderas);//Se llaman las banderas para el desplazamiento
 }
 
-void RSB(uint32_t *rx,uint32_t ra)
+void RSB(uint32_t *rx,uint32_t ra,struct flg *banderas)
 {
     *rx=0-ra;//Complemento a dos.
+	flags_desplazamiento(*rx,0,0,banderas);//Se llaman las banderas para el desplazamiento
 }
 
 void NOP()//No hace nada.
@@ -49,7 +58,7 @@ void NOP()//No hace nada.
     //No hace nada.
 }
 
-void REV(uint32_t *rx,uint32_t ra)
+void REV(uint32_t *rx,uint32_t ra,struct flg *banderas)
 {
     uint32_t aux,aux1,aux2,aux3,aux4;//Variables auxiliares para la funcion.
     int i;//Contador de ciclos for, evita repetir una linea de codigo repetitivas veces o con mas variables.
@@ -87,9 +96,11 @@ void REV(uint32_t *rx,uint32_t ra)
     aux4=aux>>8;//Se corre el bloque de 16 a 23 bits a las posiciones de 8 a 15 y se guarda en aux4.
     //Se guarda en *rx el nuevo dato ordenado.
     *rx=aux1|aux2|aux3|aux4;//Se efectua una or para acomodar cada byte en un solo registro y guardarlo.
+	
+	flags_desplazamiento(*rx,0,0,banderas);//Se llaman las banderas para el desplazamiento
 }
 
-void REV16(uint32_t *rx,uint32_t ra)
+void REV16(uint32_t *rx,uint32_t ra,struct flg *banderas)
 {
     uint32_t aux,aux1,aux2;//Variables auxiliares para la funcion.
     int i;//Contador de ciclos for, evita repetir una linea de codigo repetitivas veces o con mas variables.
@@ -111,9 +122,11 @@ void REV16(uint32_t *rx,uint32_t ra)
     aux2=aux>>16;//Se corre el bloque de 16 a 31 bits a las posiciones de 0 a 15 y se guarda en aux2.
     //Se guarda en *rx el nuevo dato ordenado.
     *rx=aux1|aux2;//Se efectua una or para acomodar cada medio registro en uno solo.
+	
+	flags_desplazamiento(*rx,0,0,banderas);//Se llaman las banderas para el desplazamiento
 }
 
-void REVSH(uint32_t *rx,uint32_t ra)
+void REVSH(uint32_t *rx,uint32_t ra,struct flg *banderas)
 {
     uint32_t aux,aux1,aux2;//Variables auxiliares para la funcion.
     int i;//Contador de ciclos for, evita repetir una linea de codigo repetitivas veces o con mas variables.
@@ -148,4 +161,6 @@ void REVSH(uint32_t *rx,uint32_t ra)
     {
         *rx=aux1|aux2;//Guarda en el nuevo orden con extension de signo 0.
     }
+	
+	flags_desplazamiento(*rx,0,0,banderas);//Se llaman las banderas para el desplazamiento
 }

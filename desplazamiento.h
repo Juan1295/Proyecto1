@@ -1,4 +1,5 @@
 #include <stdint.h>
+#include "funciones.h"
 
 //Se crea la funcion LSL.
 /**
@@ -8,7 +9,7 @@
 * \return No retorna ningun parametro.
 */
 
-void LSL(uint32_t *rx,uint32_t ra);
+void LSL(uint32_t *rx,uint32_t ra,struct flg *banderas);
 
 //Se crea la funcion LSR.
 /**
@@ -18,7 +19,7 @@ void LSL(uint32_t *rx,uint32_t ra);
 * \return No retorna ningun parametro.
 */
 
-void LSR(uint32_t *rx,uint32_t ra);
+void LSR(uint32_t *rx,uint32_t ra,struct flg *banderas);
 
 //Se crea la funcion rotar.
 /**
@@ -28,7 +29,7 @@ void LSR(uint32_t *rx,uint32_t ra);
 * \return No retorna ningun parametro.
 */
 
-void ROR(uint32_t *rx,uint32_t ra);
+void ROR(uint32_t *rx,uint32_t ra,struct flg *banderas);
 
 //Se crea la funcion de desplazar a la derecha conservando el signo.
 /**
@@ -38,7 +39,7 @@ void ROR(uint32_t *rx,uint32_t ra);
 * \return No retorna ningun parametro.
 */
 
-void ASR(uint32_t *rx,uint32_t ra);
+void ASR(uint32_t *rx,uint32_t ra,struct flg *banderas);
 
 //Se crea la funcion bit clear.
 /**
@@ -48,7 +49,7 @@ void ASR(uint32_t *rx,uint32_t ra);
 * \return No retorna ningun parametro.
 */
 
-void BIC (uint32_t *rx,uint32_t ra);
+void BIC (uint32_t *rx,uint32_t ra,struct flg *banderas);
 
 //Se crea la funcion que guarda el complemento de un registro.
 /**
@@ -58,7 +59,7 @@ void BIC (uint32_t *rx,uint32_t ra);
 * \return No retorna ningun parametro.
 */
 
-void MVN (uint32_t *rx,uint32_t ra);
+void MVN (uint32_t *rx,uint32_t ra,struct flg *banderas);
 
 //Se crea la funcion complemento a dos.
 /**
@@ -68,7 +69,7 @@ void MVN (uint32_t *rx,uint32_t ra);
 * \return No retorna ningun parametro.
 */
 
-void RSB(uint32_t *rx,uint32_t);
+void RSB(uint32_t *rx,uint32_t,struct flg *banderas);
 
 //Se crea la funcion que no hace nada.
 /**
@@ -84,7 +85,7 @@ void NOP();
 * \return No retorna ningun parametro.
 */
 
-void REV(uint32_t *rx,uint32_t ra);
+void REV(uint32_t *rx,uint32_t ra,struct flg *banderas);
 
 //Se crea la funcion REV que intercambia 16 bits.
 /**
@@ -92,7 +93,7 @@ void REV(uint32_t *rx,uint32_t ra);
 * \return No retorna ningun parametro.
 */
 
-void REV16(uint32_t *rx,uint32_t ra);
+void REV16(uint32_t *rx,uint32_t ra,struct flg *banderas);
 
 //Se crea la funcion REVSH que intercambia los dos bytes inferiores y extiende el signo.
 /**
@@ -100,4 +101,4 @@ void REV16(uint32_t *rx,uint32_t ra);
 * \return No retorna ningun parametro.
 */
 
-void REVSH(uint32_t *rx,uint32_t ra);
+void REVSH(uint32_t *rx,uint32_t ra,struct flg *banderas);
