@@ -55,7 +55,7 @@ void BAL(uint32_t *pc,uint32_t imm);//Se define la funcion B(Branch)
 * \param z bandera de cero.
 * \return No retorna ningun parametro.
 */
-void BEQ(uint32_t *pc,uint32_t imm,char *z);//Se define la funcion BEQ
+void BEQ(uint32_t *pc,uint32_t imm,char z);//Se define la funcion BEQ
 
 //Se crea la funcion registro B (Branch)
 /**
@@ -77,7 +77,7 @@ void B(uint32_t *pc,uint32_t imm);//Se define la funcion B(Branch)
 * \return No retorna ningun parametro.
 */
 
-void BNE(uint32_t *pc,uint32_t imm,char *z);//Se define la funcion BNE
+void BNE(uint32_t *pc,uint32_t imm,char z);//Se define la funcion BNE
 
 //Se crea la funcion registro BCS
 /**
@@ -88,7 +88,7 @@ void BNE(uint32_t *pc,uint32_t imm,char *z);//Se define la funcion BNE
 * \return No retorna ningun parametro.
 */
 
-void BCS(uint32_t *pc,uint32_t imm,char *c);//Se define la funcion BCS
+void BCS(uint32_t *pc,uint32_t imm,char c);//Se define la funcion BCS
 
 //Se crea la funcion registro BCC
 /**
@@ -99,7 +99,7 @@ void BCS(uint32_t *pc,uint32_t imm,char *c);//Se define la funcion BCS
 * \return No retorna ningun parametro.
 */
 
-void BCC(uint32_t *pc,uint32_t imm,char *c);//Se define la funcion BCC
+void BCC(uint32_t *pc,uint32_t imm,char c);//Se define la funcion BCC
 
 //Se crea la funcion registro BMI
 /**
@@ -110,7 +110,7 @@ void BCC(uint32_t *pc,uint32_t imm,char *c);//Se define la funcion BCC
 * \return No retorna ningun parametro.
 */
 
-void BCC(uint32_t *pc,uint32_t imm,char *n);//Se define la funcion BMI
+void BMI(uint32_t *pc,uint32_t imm,char c);//Se define la funcion BMI
 
 //Se crea la funcion registro BPL
 /**
@@ -121,7 +121,7 @@ void BCC(uint32_t *pc,uint32_t imm,char *n);//Se define la funcion BMI
 * \return No retorna ningun parametro.
 */
 
-void BPL(uint32_t *pc,uint32_t imm,char *n);//Se define la funcion BPL
+void BPL(uint32_t *pc,uint32_t imm,char n);//Se define la funcion BPL
 
 //Se crea la funcion registro BVS
 /**
@@ -132,7 +132,7 @@ void BPL(uint32_t *pc,uint32_t imm,char *n);//Se define la funcion BPL
 * \return No retorna ningun parametro.
 */
 
-void BVS(uint32_t *pc,uint32_t imm,char *v);//Se define la funcion BVS
+void BVS(uint32_t *pc,uint32_t imm,char v);//Se define la funcion BVS
 
 //Se crea la funcion registro BVC
 /**
@@ -143,7 +143,7 @@ void BVS(uint32_t *pc,uint32_t imm,char *v);//Se define la funcion BVS
 * \return No retorna ningun parametro.
 */
 
-void BVS(uint32_t *pc,uint32_t imm,char *v);//Se define la funcion BVC
+void BVC(uint32_t *pc,uint32_t imm,char v);//Se define la funcion BVC
 
 //Se crea la funcion registro BHI
 /**
@@ -154,7 +154,7 @@ void BVS(uint32_t *pc,uint32_t imm,char *v);//Se define la funcion BVC
 * \return No retorna ningun parametro.
 */
 
-void BHI(uint32_t *pc,uint32_t imm,char *c,char *z);//Se define la funcion BHI
+void BHI(uint32_t *pc,uint32_t imm,char c,char z);//Se define la funcion BHI
 
 //Se crea la funcion registro BLS
 /**
@@ -165,7 +165,7 @@ void BHI(uint32_t *pc,uint32_t imm,char *c,char *z);//Se define la funcion BHI
 * \return No retorna ningun parametro.
 */
 
-void BLS(uint32_t *pc,uint32_t imm,char *c,char *z);//Se define la funcion BLS
+void BLS(uint32_t *pc,uint32_t imm,char c,char z);//Se define la funcion BLS
 
 //Se crea la funcion registro BGE
 /**
@@ -176,7 +176,7 @@ void BLS(uint32_t *pc,uint32_t imm,char *c,char *z);//Se define la funcion BLS
 * \return No retorna ningun parametro.
 */
 
-void BGE(uint32_t *pc,uint32_t imm,char *n,char *v);//Se define la funcion BGE
+void BGE(uint32_t *pc,uint32_t imm,char n,char v);//Se define la funcion BGE
 
 //Se crea la funcion registro BLT
 /**
@@ -187,7 +187,7 @@ void BGE(uint32_t *pc,uint32_t imm,char *n,char *v);//Se define la funcion BGE
 * \return No retorna ningun parametro.
 */
 
-void BGE(uint32_t *pc,uint32_t imm,char *n,char *v);//Se define la funcion BLT
+void BLT(uint32_t *pc,uint32_t imm,char n,char v);//Se define la funcion BLT
 
 //Se crea la funcion registro BGT
 /**
@@ -198,7 +198,7 @@ void BGE(uint32_t *pc,uint32_t imm,char *n,char *v);//Se define la funcion BLT
 * \return No retorna ningun parametro.
 */
 
-void BGT(uint32_t *pc,uint32_t imm,char *z,char *n,char *v);//Se define la funcion BGT
+void BGT(uint32_t *pc,uint32_t imm,char z,char n,char v);//Se define la funcion BGT
 
 //Se crea la funcion registro BLE
 /**
@@ -209,7 +209,7 @@ void BGT(uint32_t *pc,uint32_t imm,char *z,char *n,char *v);//Se define la funci
 * \return No retorna ningun parametro.
 */
 
-void BLE(uint32_t *pc,uint32_t imm,char *z,char *n,char *v);//Se define la funcion BLE
+void BLE(uint32_t *pc,uint32_t imm,char z,char n,char v);//Se define la funcion BLE
 
 
 #endif // BRANCH_H

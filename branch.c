@@ -3,7 +3,7 @@
 void BL(uint32_t *pc,uint32_t imm,uint32_t *lr)
 {
     *lr=*pc+2;
-    *pc+=imm;//A pc le sumo el numero de instrucciones que se desean ignorar.
+    *pc=*pc+imm;//A pc le sumo el numero de instrucciones que se desean ignorar.
 }
 
 void BX(uint32_t *pc,uint32_t rm)
@@ -19,7 +19,7 @@ void BLX(uint32_t *pc,uint32_t rm,uint32_t *lr)
 
 void BAL(uint32_t *pc,uint32_t imm)
 {
-    *pc+=imm;//A pc le sumo el numero de instrucciones que se desean ignorar.
+    *pc=*pc+imm;//A pc le sumo el numero de instrucciones que se desean ignorar.
 }
 
 void BEQ(uint32_t *pc,uint32_t imm,char z)
@@ -35,7 +35,7 @@ void BEQ(uint32_t *pc,uint32_t imm,char z)
 
 void B(uint32_t *pc,uint32_t imm)
 {
-    *pc+=imm;//A pc le sumo el numero de instrucciones que se desean ignorar.
+    *pc=*pc+imm;//A pc le sumo el numero de instrucciones que se desean ignorar.
 }
 
 void BNE(uint32_t *pc,uint32_t imm,char z)
