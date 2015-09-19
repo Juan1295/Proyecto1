@@ -129,7 +129,7 @@ void BHI(uint32_t *pc,uint32_t imm,char *c,char *z)
 void BLS(uint32_t *pc,uint32_t imm,char *c,char *z)
 {
     char carry='0',zero='1';
-    if((carry==*c)&&(zero==*z))
+    if((carry==*c)||(zero==*z))
     {
         *pc+=imm;//A pc le sumo el numero de instrucciones que se desean ignorar.
     }
@@ -169,7 +169,7 @@ void BGT(uint32_t *pc,uint32_t imm,char *z,char *n,char *v)
 
 void BLE(uint32_t *pc,uint32_t imm,char *z,char *n,char *v)
 {
-   if((*z=='0')&&(*n!=*v))
+   if((*z=='0')||(*n!=*v))
    {
       *pc+=imm;//A pc le sumo el numero de instrucciones que se desean ignorar.
    }
