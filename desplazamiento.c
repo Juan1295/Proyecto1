@@ -2,55 +2,107 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include "desplazamiento.h"//Se definen librerias necesarias para la funcion
+#include "flags.h"
 
 void LSL(uint32_t *rx,uint32_t ra,struct flg *banderas)
 {
-    *rx=*rx<<ra;//Operacion necesaria para desplazar a la izquierda.
-	flags_desplazamiento(*rx,0,0,banderas);//Se llaman las banderas para el desplazamiento
+
+    int a;
+    a=*rx&(1<<(32-ra));// se define una variable auxiliar
+    if(a==1)// se compara el valor de la operacion para activar o desactivar las banderas
+      banderas->carry='1';
+    else
+    {
+        banderas->carry='0';
+    }
+    if(ra>=32)
+        {
+            *rx=*rx<<ra;
+            *rx=0;
+            flags_logica(*rx,0,0,banderas);//Se llaman las banderas para el desplazamiento
+        }
+    else
+    {
+       *rx=*rx<<ra;//Operacion necesaria para desplazar a la izquierda.
+       flags_logica(*rx,0,0,banderas);//Se llaman las banderas para el desplazamiento
+    }
 }
 
 void LSR(uint32_t *rx,uint32_t ra,struct flg *banderas)
 {
+    int a;
+    a=*rx&(1<<(ra-1));// se define una variable auxiliar
+    if(a==1)// se compara el valor de la operacion para activar o desactivar las banderas
+        banderas->carry='1';
+    else
+    {
+        banderas->carry='0';
+    }
     *rx=*rx>>ra;//Operacion necesaria para desplazar a la derecha.
-	flags_desplazamiento(*rx,0,0,banderas);//Se llaman las banderas para el desplazamiento
+	flags_logica(*rx,0,0,banderas);//Se llaman las banderas para el desplazamiento
 }
 
 void ROR(uint32_t *rx, uint32_t ra,struct flg *banderas)
 {
   uint32_t aux1,aux2;//Variables auxiliares para la rotacion
+  int a;
+    a=*rx&(1<<(ra-1));// se define una variable auxiliar
+    if(a==1)// se compara el valor de la operacion para activar o desactivar las banderas
+        banderas->carry='1';
+    else
+    {
+        banderas->carry='0';
+    }
   aux1=*rx>>ra;//Se guarda un corrimiento a la derecha en aux1 de *rx
   aux2=*rx<<(32-ra);//Se guarda un corrimiento a la izquierda en aux 2 de *rx
   *rx=aux1|aux2;//Se suman las aux para realizar la rotacion
-  
-  flags_desplazamiento(*rx,0,0,banderas,struct flg *banderas);//Se llaman las banderas para el desplazamiento
+  flags_logica(*rx,0,0,banderas);//Se llaman las banderas para el desplazamiento
 }
 
 void ASR(uint32_t *rx,uint32_t ra,struct flg *banderas)
 {
     uint32_t aux;//Se define una variable auxiliar.
+    int a;
+    a=*rx&(1<<(ra-1));// se define una variable auxiliar
+    if(a==1)// se compara el valor de la operacion para activar o desactivar las banderas
+        banderas->carry='1';
+    else
+    {
+        banderas->carry='0';
+    }
     aux=*rx&(1<<31);//Se guarda en el auxiliar el valor del bit mas significativo.
     *rx=*rx>>ra;//Se guarda en el registro el corrimiento pedido.
     *rx=*rx|aux;//Se adiere de nuevo el signo.
-	
-	flags_desplazamiento(*rx,0,0,banderas);//Se llaman las banderas para el desplazamiento
+
+	flags_logica(*rx,0,0,banderas);//Se llaman las banderas para el desplazamiento
 }
 
 void BIC (uint32_t *rx,uint32_t ra,struct flg *banderas)
 {
     *rx&=~ra;//Negacion de ra y AND entre registros
-	flags_desplazamiento(*rx,0,0,banderas);//Se llaman las banderas para el desplazamiento
+	flags_logica(*rx,0,0,banderas);//Se llaman las banderas para el desplazamiento
 }
 
 void MVN(uint32_t *rx,uint32_t ra,struct flg *banderas)
 {
     *rx=~ra;//Complemento de ra.
-	flags_desplazamiento(*rx,0,0,banderas);//Se llaman las banderas para el desplazamiento
+	flags_logica(*rx,0,0,banderas);//Se llaman las banderas para el desplazamiento
 }
 
 void RSB(uint32_t *rx,uint32_t ra,struct flg *banderas)
 {
-    *rx=0-ra;//Complemento a dos.
-	flags_desplazamiento(*rx,0,0,banderas);//Se llaman las banderas para el desplazamiento
+   *rx=~ra+1;//Complemento a dos.
+    if(ra==0)
+    {
+        banderas->carry='1';// Se modifica la bandera de carry
+        flags_logica(*rx,ra,0,banderas);//Se llaman las banderas para el desplazamiento
+    }
+    else
+    {
+        flags_logica(*rx,0,0,banderas);//Se llaman las banderas para el desplazamiento
+        banderas->carry='0';// Se modifica la bandera de carry
+    }
+
 }
 
 void NOP()//No hace nada.
@@ -96,8 +148,8 @@ void REV(uint32_t *rx,uint32_t ra,struct flg *banderas)
     aux4=aux>>8;//Se corre el bloque de 16 a 23 bits a las posiciones de 8 a 15 y se guarda en aux4.
     //Se guarda en *rx el nuevo dato ordenado.
     *rx=aux1|aux2|aux3|aux4;//Se efectua una or para acomodar cada byte en un solo registro y guardarlo.
-	
-	flags_desplazamiento(*rx,0,0,banderas);//Se llaman las banderas para el desplazamiento
+
+	flags_logica(*rx,0,0,banderas);//Se llaman las banderas para el desplazamiento
 }
 
 void REV16(uint32_t *rx,uint32_t ra,struct flg *banderas)
@@ -122,8 +174,8 @@ void REV16(uint32_t *rx,uint32_t ra,struct flg *banderas)
     aux2=aux>>16;//Se corre el bloque de 16 a 31 bits a las posiciones de 0 a 15 y se guarda en aux2.
     //Se guarda en *rx el nuevo dato ordenado.
     *rx=aux1|aux2;//Se efectua una or para acomodar cada medio registro en uno solo.
-	
-	flags_desplazamiento(*rx,0,0,banderas);//Se llaman las banderas para el desplazamiento
+
+	flags_logica(*rx,0,0,banderas);//Se llaman las banderas para el desplazamiento
 }
 
 void REVSH(uint32_t *rx,uint32_t ra,struct flg *banderas)
@@ -161,6 +213,6 @@ void REVSH(uint32_t *rx,uint32_t ra,struct flg *banderas)
     {
         *rx=aux1|aux2;//Guarda en el nuevo orden con extension de signo 0.
     }
-	
-	flags_desplazamiento(*rx,0,0,banderas);//Se llaman las banderas para el desplazamiento
+
+	flags_logica(*rx,0,0,banderas);//Se llaman las banderas para el desplazamiento
 }

@@ -1,3 +1,6 @@
+#ifndef FUNCIONES_H
+#define FUNCIONES_H
+
 #include <stdint.h>
 
     struct flg //se define una estructura para las banderas.
@@ -48,7 +51,7 @@ void EOR(uint32_t *rx, uint32_t rn,uint32_t rm,struct flg *banderas);
 void MOV(uint32_t *rx,uint32_t rn,struct flg *banderas);
 
 /**
-* \brief Funcion logica SUB para hacer una resta entre 2 registros.
+* \brief resta entre 2 registros.
 * \param rn Primer registro.
 * \param rm Segundo registro.
 * \param *rx Direccion de memoria donde se almacena la operacion SUB.
@@ -99,7 +102,22 @@ void MUL(uint32_t *rx,uint32_t rn, uint32_t rm, struct flg *banderas);
 * \brief Funcion que hace una AND bit a bit pero no guarda el resultado.
 * \param rn Primer registro.
 * \param rm Segundo registro.
+* \param rm Segundo registro
 * \param banderas Puntero a estructura tipo flg.
 * \return No hay retorno.
 */
 void TST(uint32_t rn,uint32_t rm, struct flg *banderas);
+
+/**
+* \brief Funcion que hace suma con carry
+* \param rx Primer registro.
+* \param ry segundo registro.
+* \param rz tercer registro.
+* \param c bandera de acarreo.
+* \param banderas Puntero a estructura tipo flg.
+* \return No hay retorno.
+*/
+void ADC(uint32_t *rx, uint32_t ry , uint32_t rz ,char c,struct flg *banderas);
+
+
+#endif

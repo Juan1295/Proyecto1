@@ -9,10 +9,9 @@
 //Se crea la funcion registro.
 /**
 * \brief Función que muestra en pantalla los registros .
-* \param reg[12] Arreglo de 12 enteros largos.
-* \param i Valor entero para el  primer ciclo for.
-* \param j Valor entero para el segundo ciclo for.
-* \param n Valor entero para muestreo de registros.
+* \param reg[] Arreglo de 12 enteros largos.
+* \param dim Dimension del arreglo.
+* \param banderas estructura que contiene las banderas
 * \return No retorna ningun parametro.
 */
 void registro(uint32_t reg[],size_t dim,struct flg *banderas)
@@ -29,23 +28,23 @@ void registro(uint32_t reg[],size_t dim,struct flg *banderas)
 
             printw("R%-2d:",n);//Muestra que numero de registro se va a presentar
 
-            printw("%.8X\t", reg[n]); //Imprime en pantalla 3 registros.
+            printw("%.8x\t", reg[n]); //Imprime en pantalla 3 registros.
             n++;//Contador de arreglos
         }
     printw("\n");//Salta de linea despues de imprimir los 3 registros.
 	}
     // Para mostrar laas banderas
     move(10,55);
-    printw("Z=%d",banderas->zero);
+    printw("Z=%c",banderas->zero);
 
     move(10,65);
-    printw("V=%d",banderas->sobreflujo);
+    printw("V=%c",banderas->sobreflujo);
 
     move(12,55);
-    printw("N=%d",banderas->negativo);
+    printw("N=%c",banderas->negativo);
 
     move(12,65);
-    printw("C=%d",banderas->carry);
+    printw("C=%c",banderas->carry);
 
 	refresh();
 

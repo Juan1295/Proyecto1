@@ -1,26 +1,46 @@
 #include <stdlib.h>
-#include "colors.h"
-#include "flags.h"
+#include "decoder.h"
 #include "curses.h"
+#include "funciones.h"
+#include "flags.h"
+#include "micros.h"
 
 int main(void)
 {
 
-    uint32_t reg[12],dim=12;
-    int i;
+//------- No modificar ------//
+		int i, num_instructions;
+		char ch;
+		ins_t read;
+		char** instructions;
+		instruction_t instruction;
+
+		num_instructions = readFile("code.txt", &read);
+		if(num_instructions==-1)
+			return 0;
+
+		if(read.array==NULL)
+			return 0;
+
+		instructions = read.array; /* Arreglo con las instrucciones */
+	//---------------------------//
+
+    uint32_t reg[16],dim=14;
+    int j;
     // Se inicializan los registros.
-        for(i=0;i<12;i++)
+        for(j=0;j<=15;j++)
     {
-        reg[i]=0;
+        reg[j]=0;
     }
 
+    j=0;
     struct flg banderas;
-    // Se inicializan las banderas.
 
-    banderas.carry=0;
-    banderas.sobreflujo=0;
-    banderas.negativo=0;
-    banderas.zero=0;
+    // Se inicializan las banderas.
+    banderas.carry='0';
+    banderas.sobreflujo='0';
+    banderas.negativo='0';
+    banderas.zero='0';
 
 
 	initscr();		/* Inicia modo curses */
@@ -43,79 +63,57 @@ int main(void)
 
     attron(COLOR_PAIR(2));
     move(2,34);
-	printw("Emulador Corte M0");
-	attroff(COLOR_PAIR(2));	/* DEshabilita los colores Pair 2 */
+	printw("Emulador Cortex-M0");
+	attroff(COLOR_PAIR(2));	/* Deshabilita los colores Pair 2 */
 
-	registro(reg,dim,&banderas);
+    registro(reg,dim,&banderas);
+    while(ch!='q')
+    {
 
-	getch();	/* Espera entrada del usuario */
+        registro(reg,dim,&banderas);//Muestra los registros y las banderas en pantalla
+        move(20,55);
+        printw("Presione Q para salir");
+        ch=getch();// Espera una tecla para continuar
+        j=reg[15];
+        instruction = getInstruction(instructions[reg[15]]); // Instrucción en la posición reg[15]
+        move(9,10);
+        printw("%s",instructions[reg[15]]);//Imprime la instruccion
+        move(17,55);
+        printw("PC=%u",reg[15]*2);//Imprime el registro
+        move(17,65);
+        printw("LR=%u",reg[14]*2);//Imprime el registro
+        decodeInstruction(instruction,reg,&banderas); // Debe ser modificada de acuerdo a cada código
+        if(j==reg[15])
+        {
+           reg[15]++;
+        }
 
-    move(9,10);
-	printw("MOVS R0,#36");
-	refresh();
-	getch();
-	MOV(&reg[0],36,&banderas);
-	registro(reg,dim,&banderas);
-	getch();
-	move(9,10);
-	printw("MOVS R1,#6 ");
-	getch();
-	MOV(&reg[1],6,&banderas);
-	registro(reg,dim,&banderas);
-	getch();
-	move(9,10);
-	printw("MOVS R2,R0 ");
-	getch();
-	MOV(&reg[2],reg[0],&banderas);
-	registro(reg,dim,&banderas);
-	getch();
-    move(9,10);
-	printw("MOVS R3,1 ");
-	getch();
-	MOV(&reg[3],1,&banderas);
-	registro(reg,dim,&banderas);
-	getch();
-    move(9,10);
-	printw("LSLS R3,R3,#31 ");
-	getch();
-	LSL(&reg[3],31,&banderas);
-	registro(reg,dim,&banderas);
-	getch();
-	move(9,10);
-	printw("MOVS R0,#R0 ");
-	getch();
-	MOV(&reg[0],reg[0],&banderas);
-	registro(reg,dim,&banderas);
-	getch();
-    move(9,10);
-	printw("MOVS R4,#0 ");
-	getch();
-	MOV(&reg[4],0,&banderas);
-	registro(reg,dim,&banderas);
-	getch();
-    move(9,10);
-	printw("Function loop ");
-	getch();
-    move(9,10);
-	printw("LSLS R3,R3,#31 ");
-	getch();
-	LSL(&reg[2],1,&banderas);
-	registro(reg,dim,&banderas);
-	getch();
-    move(9,10);
-	printw("ADCS R4,R4,R4 ");
-	getch();
-	ADD(&reg[4],reg[4],reg[4],&banderas);
-	registro(reg,dim,&banderas);
-	getch();
-    move(9,10);
-	printw("CMP R4,R1   ");
-	getch();
-	CMP(reg[4],reg[1],&banderas);
-	registro(reg,dim,&banderas);
-	getch();
+
+
+
+
+
+    }
+
+    /* Ejemplo de uso
+		Llama la función que separa el mnemonico y los operandos
+		Llama la instrucción que decodifica y ejecuta la instrucción
+	*/
+	// Esto debe ser ciclico para la lectura de todas las instrucciones, de acuerdo
+	// al valor del PC (Program Counter)
+
+    		//------- No modificar ------//
+	/* Libera la memoria reservada para las instrucciones */
+	for(i=0; i<num_instructions; i++){
+		free(read.array[i]);
+	}
+	free(read.array);
+	//---------------------------//
 
 	endwin();	/* Finaliza el modo curses */
+
+
+
 
 	return 0;
 }

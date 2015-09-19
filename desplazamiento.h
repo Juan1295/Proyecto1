@@ -1,11 +1,13 @@
 #include <stdint.h>
 #include "funciones.h"
 
+
 //Se crea la funcion LSL.
 /**
 * \brief Función de desplazamientos a la izquierda.
 * \param *rx puntero del registro con la informacion a desplazar.
 * \param ra registro que indica el numero de posiciones a desplzar.
+* \param banderas puntero a estructura que contiene las banderas.
 * \return No retorna ningun parametro.
 */
 
@@ -16,6 +18,7 @@ void LSL(uint32_t *rx,uint32_t ra,struct flg *banderas);
 * \brief Función de desplazamientos a la derecha.
 * \param *rx puntero del registro con la informacion a desplazar.
 * \param ra registro que indica el numero de posiciones a desplzar.
+* \param banderas puntero a estructura que contiene las banderas.
 * \return No retorna ningun parametro.
 */
 
@@ -26,6 +29,7 @@ void LSR(uint32_t *rx,uint32_t ra,struct flg *banderas);
 * \brief Función para rotar registros.
 * \param *rx puntero del registro con la informacion a rotar.
 * \param ra registro que indica el numero de rotaciones a realizar.
+* \param banderas puntero a estructura que contiene las banderas.
 * \return No retorna ningun parametro.
 */
 
@@ -36,6 +40,7 @@ void ROR(uint32_t *rx,uint32_t ra,struct flg *banderas);
 * \brief Función para desplzar registros conservando el signo.
 * \param *rx puntero del registro con la informacion a desplzar.
 * \param ra registro que indica el numero de desplazamientos a realizar.
+* \param banderas puntero a estructura que contiene las banderas.
 * \return No retorna ningun parametro.
 */
 
@@ -46,6 +51,7 @@ void ASR(uint32_t *rx,uint32_t ra,struct flg *banderas);
 * \brief Función AND entre un registro y el complemento del otro.
 * \param *rx puntero del registro con la informacion de la operacion.
 * \param ra registro a negar.
+* \param banderas puntero a estructura que contiene las banderas.
 * \return No retorna ningun parametro.
 */
 
@@ -56,6 +62,7 @@ void BIC (uint32_t *rx,uint32_t ra,struct flg *banderas);
 * \brief Función que guarda el complemento de un registro.
 * \param *rx puntero del registro donde se guarda el complemento.
 * \param ra registro con el dato.
+* \param banderas puntero a estructura que contiene las banderas.
 * \return No retorna ningun parametro.
 */
 
@@ -66,10 +73,11 @@ void MVN (uint32_t *rx,uint32_t ra,struct flg *banderas);
 * \brief Función que guarda el complemento de un registro.
 * \param *rx puntero del registro donde se guarda el complemento.
 * \param ra registro con el dato.
+* \param banderas puntero a estructura que contiene las banderas.
 * \return No retorna ningun parametro.
 */
 
-void RSB(uint32_t *rx,uint32_t,struct flg *banderas);
+void RSB(uint32_t *rx,uint32_t ra,struct flg *banderas);
 
 //Se crea la funcion que no hace nada.
 /**
@@ -83,6 +91,9 @@ void NOP();
 /**
 * \brief Función que intercambia bytes, el superior con el inferior y los del medio entre ellos.
 * \return No retorna ningun parametro.
+* \param banderas puntero a estructura que contiene las banderas.
+* \param rx Registro donde guarda el resultado.
+* \param ra Segundo registro.
 */
 
 void REV(uint32_t *rx,uint32_t ra,struct flg *banderas);
@@ -90,6 +101,9 @@ void REV(uint32_t *rx,uint32_t ra,struct flg *banderas);
 //Se crea la funcion REV que intercambia 16 bits.
 /**
 * \brief Función que intercambia la mitad de un registro por su otra mitad.
+* \param banderas puntero a estructura que contiene las banderas.
+* \param rx Registro donde guarda el resultado.
+* \param ra Segundo registro.
 * \return No retorna ningun parametro.
 */
 
@@ -99,6 +113,9 @@ void REV16(uint32_t *rx,uint32_t ra,struct flg *banderas);
 /**
 * \brief Función que intercambia los dos bytes inferiores y extiende el signo.
 * \return No retorna ningun parametro.
+* \param banderas puntero a estructura que contiene las banderas.
+* \param rx Registro donde guarda el resultado.
+* \param ra Segundo registro.
 */
 
 void REVSH(uint32_t *rx,uint32_t ra,struct flg *banderas);
