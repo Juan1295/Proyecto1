@@ -22,15 +22,15 @@ void BAL(uint32_t *pc,uint32_t imm)
     *pc+=imm;//A pc le sumo el numero de instrucciones que se desean ignorar.
 }
 
-void BEQ(uint32_t *pc,uint32_t imm,char *z)
+void BEQ(uint32_t *pc,uint32_t imm,char z)
 {
     char ban='1';
-    if(ban==*z)
+    if(ban==z)
     {
-        *pc+=imm;//A pc le sumo el numero de instrucciones que se desean ignorar.
+        *pc=*pc+imm;//A pc le sumo el numero de instrucciones que se desean ignorar.
     }
     else
-        *pc++;//A pc le sumo 1.
+        *pc=*pc+1;//A pc le sumo 1.
 }
 
 void B(uint32_t *pc,uint32_t imm)
@@ -38,142 +38,142 @@ void B(uint32_t *pc,uint32_t imm)
     *pc+=imm;//A pc le sumo el numero de instrucciones que se desean ignorar.
 }
 
-void BNE(uint32_t *pc,uint32_t imm,char *z)
+void BNE(uint32_t *pc,uint32_t imm,char z)
 {
     char ban='0';
-    if(ban==*z)
+    if(ban==z)
     {
-        *pc+=imm;//A pc le sumo el numero de instrucciones que se desean ignorar.
+        *pc=*pc+imm;//A pc le sumo el numero de instrucciones que se desean ignorar.
     }
     else
-        *pc++;//A pc le sumo 1.
+        *pc=*pc+1;//A pc le sumo 1.
 }
 
-void BCS(uint32_t *pc,uint32_t imm,char *c)
+void BCS(uint32_t *pc,uint32_t imm,char c)
 {
     char ban='1';
-    if(ban==*c)
+    if(ban==c)
     {
-        *pc+=imm;//A pc le sumo el numero de instrucciones que se desean ignorar.
+        *pc=*pc+imm;//A pc le sumo el numero de instrucciones que se desean ignorar.
     }
     else
-        *pc++;//A pc le sumo 1.
+        *pc=*pc+1;//A pc le sumo 1.
 }
 
-void BCC(uint32_t *pc,uint32_t imm,char *c)
+void BCC(uint32_t *pc,uint32_t imm,char c)
 {
     char ban='0';
-    if(ban==*c)
+    if(ban==c)
     {
-        *pc+=imm;//A pc le sumo el numero de instrucciones que se desean ignorar.
+        *pc=*pc+imm;//A pc le sumo el numero de instrucciones que se desean ignorar.
     }
     else
-        *pc++;//A pc le sumo 1.
+        *pc=*pc+1;//A pc le sumo 1.
 }
 
-void BMI(uint32_t *pc,uint32_t imm,char *n)
+void BMI(uint32_t *pc,uint32_t imm,char n)
 {
     char ban='1';
-    if(ban==*n)
+    if(ban==n)
     {
-        *pc+=imm;//A pc le sumo el numero de instrucciones que se desean ignorar.
+        *pc=*pc+imm;//A pc le sumo el numero de instrucciones que se desean ignorar.
     }
     else
-        *pc++;//A pc le sumo 1.
+        *pc=*pc+1;//A pc le sumo 1.
 }
 
-void BPL(uint32_t *pc,uint32_t imm,char *n)
+void BPL(uint32_t *pc,uint32_t imm,char n)
 {
     char ban='0';
-    if(ban==*n)
+    if(ban==n)
     {
-        *pc+=imm;//A pc le sumo el numero de instrucciones que se desean ignorar.
+        *pc=*pc+imm;//A pc le sumo el numero de instrucciones que se desean ignorar.
     }
     else
-        *pc++;//A pc le sumo 1.
+        *pc=*pc+1;//A pc le sumo 1.
 }
 
-void BVS(uint32_t *pc,uint32_t imm,char *v)
+void BVS(uint32_t *pc,uint32_t imm,char v)
 {
     char ban='1';
-    if(ban==*v)
+    if(ban==v)
     {
-        *pc+=imm;//A pc le sumo el numero de instrucciones que se desean ignorar.
+        *pc=*pc+imm;;//A pc le sumo el numero de instrucciones que se desean ignorar.
     }
     else
-        *pc++;//A pc le sumo 1.
+        *pc=*pc+1;//A pc le sumo 1.
 }
 
-void BVC(uint32_t *pc,uint32_t imm,char *v)
+void BVC(uint32_t *pc,uint32_t imm,char v)
 {
     char ban='0';
-    if(ban==*v)
+    if(ban==v)
     {
-        *pc+=imm;//A pc le sumo el numero de instrucciones que se desean ignorar.
+        *pc=*pc+imm;//A pc le sumo el numero de instrucciones que se desean ignorar.
     }
     else
-        *pc++;//A pc le sumo 1.
+        *pc=*pc+1;//A pc le sumo 1.
 }
 
-void BHI(uint32_t *pc,uint32_t imm,char *c,char *z)
+void BHI(uint32_t *pc,uint32_t imm,char c,char z)
 {
     char carry='1',zero='0';
-    if((carry==*c)&&(zero==*z))
+    if((carry==c)&&(zero==z))
     {
-        *pc+=imm;//A pc le sumo el numero de instrucciones que se desean ignorar.
+        *pc=*pc+imm;//A pc le sumo el numero de instrucciones que se desean ignorar.
     }
     else
-        *pc++;//A pc le sumo 1.
+        *pc=*pc+1;//A pc le sumo 1.
 }
 
-void BLS(uint32_t *pc,uint32_t imm,char *c,char *z)
+void BLS(uint32_t *pc,uint32_t imm,char c,char z)
 {
     char carry='0',zero='1';
-    if((carry==*c)||(zero==*z))
+    if((carry==c)||(zero==z))
     {
-        *pc+=imm;//A pc le sumo el numero de instrucciones que se desean ignorar.
+        *pc=*pc+imm;//A pc le sumo el numero de instrucciones que se desean ignorar.
     }
     else
-        *pc++;//A pc le sumo 1.
+        *pc=*pc+1;//A pc le sumo 1.
 }
 
-void BGE(uint32_t *pc,uint32_t imm,char *n,char *v)
+void BGE(uint32_t *pc,uint32_t imm,char n,char v)
 {
-        if(*n==*v)
+        if(n==v)
     {
-        *pc+=imm;//A pc le sumo el numero de instrucciones que se desean ignorar.
+        *pc=*pc+imm;//A pc le sumo el numero de instrucciones que se desean ignorar.
     }
     else
-        *pc++;//A pc le sumo 1.
+        *pc=*pc+1;//A pc le sumo 1.
 }
 
-void BLT(uint32_t *pc,uint32_t imm,char *n,char *v)
+void BLT(uint32_t *pc,uint32_t imm,char n,char v)
 {
-        if(*n!=*v)
+        if(n!=v)
     {
-        *pc+=imm;//A pc le sumo el numero de instrucciones que se desean ignorar.
+        *pc=*pc+imm;//A pc le sumo el numero de instrucciones que se desean ignorar.
     }
     else
-        *pc++;//A pc le sumo 1.
+        *pc=*pc+1;//A pc le sumo 1.
 }
 
-void BGT(uint32_t *pc,uint32_t imm,char *z,char *n,char *v)
+void BGT(uint32_t *pc,uint32_t imm,char z,char n,char v)
 {
-   if((*z=='0')&&(*n==*v))
+   if((z=='0')&&(n==v))
    {
-      *pc+=imm;//A pc le sumo el numero de instrucciones que se desean ignorar.
+      *pc=*pc+imm;//A pc le sumo el numero de instrucciones que se desean ignorar.
    }
     else
-        *pc++;//A pc le sumo 1.
+        *pc=*pc+1;//A pc le sumo 1.
 }
 
-void BLE(uint32_t *pc,uint32_t imm,char *z,char *n,char *v)
+void BLE(uint32_t *pc,uint32_t imm,char z,char n,char v)
 {
-   if((*z=='0')||(*n!=*v))
+   if((z=='0')||(n!=v))
    {
-      *pc+=imm;//A pc le sumo el numero de instrucciones que se desean ignorar.
+      *pc=*pc+imm;//A pc le sumo el numero de instrucciones que se desean ignorar.
    }
     else
-        *pc++;//A pc le sumo 1.
+        *pc=*pc+1;//A pc le sumo 1.
 }
 
