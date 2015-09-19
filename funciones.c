@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "funciones.h"
-
+#include "flags.h"
 
 void AND(uint32_t *rx,uint32_t rn,uint32_t rm,struct flg *banderas)//Se define la funcion AND
 {

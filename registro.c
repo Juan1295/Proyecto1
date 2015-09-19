@@ -3,7 +3,7 @@
 # include <stdint.h>
 #include "colors.h"
 #include "micros.h"
-#include "curses.h"
+#include <curses.h>
 
 
 //Se crea la funcion registro.

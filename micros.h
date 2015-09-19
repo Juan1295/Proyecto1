@@ -4,7 +4,7 @@
 # include  <stdlib.h>
 # include  <stdint.h>
 # include  <windows.h>
-#include "curses.h"
+#include <curses.h>
 #include "funciones.h"
 
 #include  "colors.h"

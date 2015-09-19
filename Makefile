@@ -1,11 +1,12 @@
-cc=gcc
+CC = gcc
 CFLAGS = -O3 -c -Wall
-all:obj
-	$(cc) -o main.exe *.o
+
+all: obj
+	$(CC) -o main.exe *.o -lpdcurses
 	rm *.o
 	
 obj:
-	$(cc) $(CFLAGS) *.c
-
+	$(CC) $(CFLAGS) *.c	
+	
 clean:
-	rm main.exe
+	rm main.exe	
