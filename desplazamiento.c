@@ -9,7 +9,7 @@ void LSL(uint32_t *rx,uint32_t ra,struct flg *banderas)
 
     int a;
     a=*rx&(1<<(32-ra));// se define una variable auxiliar
-    if(a==1)// se compara el valor de la operacion para activar o desactivar las banderas
+    if(a)// se compara el valor de la operacion para activar o desactivar las banderas
       banderas->carry='1';
     else
     {
@@ -32,7 +32,7 @@ void LSR(uint32_t *rx,uint32_t ra,struct flg *banderas)
 {
     int a;
     a=*rx&(1<<(ra-1));// se define una variable auxiliar
-    if(a==1)// se compara el valor de la operacion para activar o desactivar las banderas
+    if(a)// se compara el valor de la operacion para activar o desactivar las banderas
         banderas->carry='1';
     else
     {
@@ -47,7 +47,7 @@ void ROR(uint32_t *rx, uint32_t ra,struct flg *banderas)
   uint32_t aux1,aux2;//Variables auxiliares para la rotacion
   int a;
     a=*rx&(1<<(ra-1));// se define una variable auxiliar
-    if(a==1)// se compara el valor de la operacion para activar o desactivar las banderas
+    if(a)// se compara el valor de la operacion para activar o desactivar las banderas
         banderas->carry='1';
     else
     {
@@ -64,7 +64,7 @@ void ASR(uint32_t *rx,uint32_t ra,struct flg *banderas)
     uint32_t aux;//Se define una variable auxiliar.
     int a;
     a=*rx&(1<<(ra-1));// se define una variable auxiliar
-    if(a==1)// se compara el valor de la operacion para activar o desactivar las banderas
+    if(a)// se compara el valor de la operacion para activar o desactivar las banderas
         banderas->carry='1';
     else
     {
