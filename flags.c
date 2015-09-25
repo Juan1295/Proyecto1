@@ -53,7 +53,7 @@ void flags_logica(uint32_t rx,uint32_t rn, uint32_t rm,struct flg *punt)
     numero=numero|(1<<31);
 
     //Condicion para el numero negativo.
-    if((1<<31)&&rx)
+    if((1<<31)&rx)
     {
         punt->negativo='1';
     }
