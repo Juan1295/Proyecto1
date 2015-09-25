@@ -28,7 +28,7 @@ void registro(uint32_t reg[],size_t dim,struct flg *banderas)
 
             printw("R%-2d:",n);//Muestra que numero de registro se va a presentar
 
-            printw("%.8x\t", reg[n]); //Imprime en pantalla 3 registros.
+            printw("%.8X\t", reg[n]); //Imprime en pantalla 3 registros.
             n++;//Contador de arreglos
         }
     printw("\n");//Salta de linea despues de imprimir los 3 registros.
