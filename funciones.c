@@ -27,7 +27,13 @@ void EOR(uint32_t *rx,uint32_t rn,uint32_t rm,struct flg *banderas)//Se define l
 }
 
 
-void MOV(uint32_t *rx,uint32_t rn,struct flg *banderas)//Se define la función MOVER
+void MOV(uint32_t *rx,uint32_t rn)//Se define la función MOVER sin modificar banderas
+{
+   *rx=rn;//Se copia rn en la direccion del registro rx.
+   
+}
+
+void MOVS(uint32_t *rx,uint32_t rn,struct flg *banderas)//Se define la función MOVER
 {
    *rx=rn;//Se copia rn en la direccion del registro rx.
    flags_logica(*rx,0,0,banderas);//Se llama la función para las banderas
@@ -54,15 +60,23 @@ void CMN(uint32_t rn,uint32_t rm,struct flg *banderas)//Funcion que suma pero no
 
 void CMP(uint32_t rn,uint32_t rm,struct flg *banderas)//Funcion que no retorna resultado pero que modifica banderas
 {
-    uint32_t rx;
-    rx=rn+((~rm)+1);//Resta el registro rn con el registro rm
-    flags(rx,rn,((~rm)+1),banderas);// Se modifican las banderas.
+	uint32_t rx;
+	if(rm!=0)
+	{
+		rx=rn+((~rm)+1);//Resta el registro rn con el registro rm
+		flags(rx,rn,((~rm)+1),banderas);// Se modifican las banderas.
+	}
+	else
+	{
+		rx=rn;//Resta el registro rn con el registro rm
+		flags(rx,rn,0,banderas);// Se modifican las banderas.
+	}
 }
 
 void MUL(uint32_t *rx,uint32_t rn, uint32_t rm, struct flg *banderas)//Funcion que multiplica dos registros
 {
     *rx=rn*rm;//Se multiplican los registros y se almacenan en rx
-    flags(*rx,rn,rm,banderas);//Se modifican las banderas
+    flags_logica(*rx,0,0,banderas);//Se modifican las banderas
 }
 
 void TST(uint32_t rn,uint32_t rm, struct flg *banderas)// Funcion que hace una AND entre los registros pero no guarda el resultado.
@@ -76,11 +90,11 @@ void ADC(uint32_t *rx, uint32_t ry , uint32_t rz ,char c,struct flg *banderas)//
 {
 	if(c=='1')//Se evalua si carry es 1 o 0
 	{
-		*rx=*rx+ry+rz+1;
+		*rx=ry+rz+1;
 	}
 	else
 	{
-		*rx=*rx+ry+rz;
+		*rx=ry+rz;
     }
     flags(*rx,ry,rz,banderas);// Se llaman las banderas
 }

@@ -27,7 +27,7 @@ void flags(uint32_t rx,uint32_t rn, uint32_t rm,struct flg *punt)
         punt->zero='0';
     }
     //Condicion para el acarreo
-    if(((rn>numero)&&(rm<numero)&&(rx<numero))||((rm>numero)&&(rn<numero)&&(rx<numero))||((rn>numero)&&(rm>numero)))
+    if(((rn>=numero)&&(rm<numero)&&(rx<numero)) || ((rm>=numero)&&(rn<numero)&&(rx<numero)) || ((rn>=numero)&&(rm>=numero)))
     {
         punt->carry='1';
     }
@@ -53,7 +53,7 @@ void flags_logica(uint32_t rx,uint32_t rn, uint32_t rm,struct flg *punt)
     numero=numero|(1<<31);
 
     //Condicion para el numero negativo.
-    if((1<<31)&rx)
+    if((1<<31)&&rx)
     {
         punt->negativo='1';
     }

@@ -48,7 +48,7 @@ void EOR(uint32_t *rx, uint32_t rn,uint32_t rm,struct flg *banderas);
 * \param banderas Puntero a estructura tipo flg.
 * \return No hay retorno.
 */
-void MOV(uint32_t *rx,uint32_t rn,struct flg *banderas);
+void MOVS(uint32_t *rx,uint32_t rn,struct flg *banderas);
 
 /**
 * \brief resta entre 2 registros.
@@ -119,5 +119,5 @@ void TST(uint32_t rn,uint32_t rm, struct flg *banderas);
 */
 void ADC(uint32_t *rx, uint32_t ry , uint32_t rz ,char c,struct flg *banderas);
 
-
+void MOV(uint32_t *rx,uint32_t rn);
 #endif

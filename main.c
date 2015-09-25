@@ -74,7 +74,6 @@ int main(void)
         move(20,55);
         printw("Presione Q para salir");
         ch=getch();// Espera una tecla para continuar
-        j=reg[15];
         instruction = getInstruction(instructions[reg[15]]); // Instrucción en la posición reg[15]
         move(9,10);
         printw("%s",instructions[reg[15]]);//Imprime la instruccion
@@ -83,16 +82,6 @@ int main(void)
         move(17,65);
         printw("LR=%u",reg[14]*2);//Imprime el registro
         decodeInstruction(instruction,reg,&banderas); // Debe ser modificada de acuerdo a cada código
-        if(j==reg[15])
-        {
-           reg[15]++;
-        }
-
-
-
-
-
-
     }
 
     /* Ejemplo de uso

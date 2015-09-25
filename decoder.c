@@ -7,15 +7,29 @@ void decodeInstruction(instruction_t instruction, uint32_t *reg,struct flg *band
 		// instruction.op1_value --> Valor primer operando
 		// instruction.op1_type  --> Tipo primer operando (R->Registro #->Numero N->Ninguno)
 		// ... Igual para los otros operandos
+		*(reg+15)=*(reg+15)+1;
 		if(instruction.op2_type == '#')//Se compara el tipo de dato en el operando 3
-            MOV(reg+instruction.op1_value,instruction.op2_value,banderas);//Se llama la instruccion MOVS
+            MOVS(reg+instruction.op1_value,instruction.op2_value,banderas);//Se llama la instruccion MOVS
         if(instruction.op2_type == 'R')//Se compara el tipo de dato en el operando 3
-            MOV(reg+instruction.op1_value,*(reg+instruction.op2_value),banderas);//Se llama la instruccion MOVS
+            MOVS(reg+instruction.op1_value,*(reg+instruction.op2_value),banderas);//Se llama la instruccion MOVS
 	}
+	
+		if( strcmp(instruction.mnemonic,"MOV") == 0 ){
+		// instruction.op1_value --> Valor primer operando
+		// instruction.op1_type  --> Tipo primer operando (R->Registro #->Numero N->Ninguno)
+		// ... Igual para los otros operandos
+		*(reg+15)=*(reg+15)+1;
+		if(instruction.op2_type == '#')//Se compara el tipo de dato en el operando 3
+            MOV(reg+instruction.op1_value,instruction.op2_value);//Se llama la instruccion MOVS
+        if(instruction.op2_type == 'R')//Se compara el tipo de dato en el operando 3
+            MOV(reg+instruction.op1_value,*(reg+instruction.op2_value));//Se llama la instruccion MOVS
+	}
+	
     if( strcmp(instruction.mnemonic,"CMP") == 0 ){
 		// instruction.op1_value --> Valor primer operando
 		// instruction.op1_type  --> Tipo primer operando (R->Registro #->Numero N->Ninguno)
 		// ... Igual para los otros operandos
+		*(reg+15)=*(reg+15)+1;
         if(instruction.op2_type == '#')//Se compara el tipo de dato en el operando 3
             CMP(*(reg+instruction.op1_value),instruction.op2_value,banderas);//Se llama la instruccion CMP
         if(instruction.op2_type == 'R')//Se compara el tipo de dato en el operando 3
@@ -25,6 +39,7 @@ void decodeInstruction(instruction_t instruction, uint32_t *reg,struct flg *band
 		// instruction.op1_value --> Valor primer operando
 		// instruction.op1_type  --> Tipo primer operando (R->Registro #->Numero N->Ninguno)
 		// ... Igual para los otros operandos
+		*(reg+15)=*(reg+15)+1;
         if(instruction.op3_type == '#')//Se compara el tipo de dato en el operando 3
             AND((reg+instruction.op1_value),*(reg+instruction.op2_value),instruction.op3_value,banderas);//Se llama la instruccion ANDS
         if(instruction.op3_type == 'R')//Se compara el tipo de dato en el operando 3
@@ -34,6 +49,7 @@ void decodeInstruction(instruction_t instruction, uint32_t *reg,struct flg *band
 		// instruction.op1_value --> Valor primer operando
 		// instruction.op1_type  --> Tipo primer operando (R->Registro #->Numero N->Ninguno)
 		// ... Igual para los otros operandos
+		*(reg+15)=*(reg+15)+1;
         if(instruction.op3_type == '#')//Se compara el tipo de dato en el operando 3
             ORR((reg+instruction.op1_value),*(reg+instruction.op2_value),instruction.op3_value,banderas);//Se llama la instruccion ORR
         if(instruction.op3_type == 'R')//Se compara el tipo de dato en el operando 3
@@ -43,15 +59,17 @@ void decodeInstruction(instruction_t instruction, uint32_t *reg,struct flg *band
 		// instruction.op1_value --> Valor primer operando
 		// instruction.op1_type  --> Tipo primer operando (R->Registro #->Numero N->Ninguno)
 		// ... Igual para los otros operandos
+		*(reg+15)=*(reg+15)+1;
         if(instruction.op3_type == '#')//Se compara el tipo de dato en el operando 3
             EOR((reg+instruction.op1_value),*(reg+instruction.op2_value),instruction.op3_value,banderas);//Se llama la instruccion EOR
         if(instruction.op3_type == 'R')//Se compara el tipo de dato en el operando 3
             EOR((reg+instruction.op1_value),*(reg+instruction.op2_value),*(reg+instruction.op3_value),banderas);//Se llama la instruccion EOR
 	}
-    if( strcmp(instruction.mnemonic,"SUB") == 0 ){
+    if( strcmp(instruction.mnemonic,"SUBS") == 0 ){
 		// instruction.op1_value --> Valor primer operando
 		// instruction.op1_type  --> Tipo primer operando (R->Registro #->Numero N->Ninguno)
 		// ... Igual para los otros operandos
+		*(reg+15)=*(reg+15)+1;
         if(instruction.op3_type == '#')//Se compara el tipo de dato en el operando 3
             SUB((reg+instruction.op1_value),*(reg+instruction.op2_value),instruction.op3_value,banderas);//Se llama la instruccion SUB
         if(instruction.op3_type == 'R')//Se compara el tipo de dato en el operando 3
@@ -61,6 +79,7 @@ void decodeInstruction(instruction_t instruction, uint32_t *reg,struct flg *band
 		// instruction.op1_value --> Valor primer operando
 		// instruction.op1_type  --> Tipo primer operando (R->Registro #->Numero N->Ninguno)
 		// ... Igual para los otros operandos
+		*(reg+15)=*(reg+15)+1;
         if(instruction.op3_type == '#')//Se compara el tipo de dato en el operando 3
             ADD((reg+instruction.op1_value),*(reg+instruction.op2_value),instruction.op3_value,banderas);//Se llama la instruccion ADD
         if(instruction.op3_type == 'R')//Se compara el tipo de dato en el operando 3
@@ -71,6 +90,7 @@ void decodeInstruction(instruction_t instruction, uint32_t *reg,struct flg *band
 		// instruction.op1_value --> Valor primer operando
 		// instruction.op1_type  --> Tipo primer operando (R->Registro #->Numero N->Ninguno)
 		// ... Igual para los otros operandos
+		*(reg+15)=*(reg+15)+1;
         if(instruction.op3_type == '#')//Se compara el tipo de dato en el operando 3
             ADC((reg+instruction.op1_value),*(reg+instruction.op2_value),instruction.op3_value,banderas->carry,banderas);//Se llama la instruccion ADC
         if(instruction.op3_type == 'R')//Se compara el tipo de dato en el operando 3
@@ -80,6 +100,7 @@ void decodeInstruction(instruction_t instruction, uint32_t *reg,struct flg *band
 		// instruction.op1_value --> Valor primer operando
 		// instruction.op1_type  --> Tipo primer operando (R->Registro #->Numero N->Ninguno)
 		// ... Igual para los otros operandos
+		*(reg+15)=*(reg+15)+1;
         if(instruction.op2_type == '#')//Se compara el tipo de dato en el operando 3
             CMN(*(reg+instruction.op1_value),instruction.op2_value,banderas);//Se llama la instruccion CMN
         if(instruction.op2_type == 'R')//Se compara el tipo de dato en el operando 3
@@ -90,6 +111,7 @@ void decodeInstruction(instruction_t instruction, uint32_t *reg,struct flg *band
 		// instruction.op1_value --> Valor primer operando
 		// instruction.op1_type  --> Tipo primer operando (R->Registro #->Numero N->Ninguno)
 		// ... Igual para los otros operandos
+		*(reg+15)=*(reg+15)+1;
         if(instruction.op3_type == '#')//Se compara el tipo de dato en el operando 3
             MUL((reg+instruction.op1_value),*(reg+instruction.op2_value),instruction.op3_value,banderas);//Se llama la instruccion MUL
         if(instruction.op3_type == 'R')//Se compara el tipo de dato en el operando 3
@@ -99,6 +121,7 @@ void decodeInstruction(instruction_t instruction, uint32_t *reg,struct flg *band
 		// instruction.op1_value --> Valor primer operando
 		// instruction.op1_type  --> Tipo primer operando (R->Registro #->Numero N->Ninguno)
 		// ... Igual para los otros operandos
+		*(reg+15)=*(reg+15)+1;
         if(instruction.op2_type == '#')//Se compara el tipo de dato en el operando 3
             TST(*(reg+instruction.op1_value),instruction.op2_value,banderas);//Se llama la instruccion TST
         if(instruction.op2_type == 'R')//Se compara el tipo de dato en el operando 3
@@ -108,6 +131,7 @@ void decodeInstruction(instruction_t instruction, uint32_t *reg,struct flg *band
 		// instruction.op1_value --> Valor primer operando
 		// instruction.op1_type  --> Tipo primer operando (R->Registro #->Numero N->Ninguno)
 		// ... Igual para los otros operandos
+		*(reg+15)=*(reg+15)+1;
         if(instruction.op2_type == '#')//Se compara el tipo de dato en el operando 3
             LSL((reg+instruction.op1_value),instruction.op2_value,banderas);//Se llama la instruccion LSL
         if(instruction.op2_type == 'R')//Se compara el tipo de dato en el operando 3
@@ -118,6 +142,7 @@ void decodeInstruction(instruction_t instruction, uint32_t *reg,struct flg *band
 		// instruction.op1_value --> Valor primer operando
 		// instruction.op1_type  --> Tipo primer operando (R->Registro #->Numero N->Ninguno)
 		// ... Igual para los otros operandos
+		*(reg+15)=*(reg+15)+1;
         if(instruction.op2_type == '#')//Se compara el tipo de dato en el operando 3
             LSR((reg+instruction.op1_value),instruction.op2_value,banderas);//Se llama la instruccion LSR
         if(instruction.op2_type == 'R')//Se compara el tipo de dato en el operando 3
@@ -128,6 +153,7 @@ void decodeInstruction(instruction_t instruction, uint32_t *reg,struct flg *band
 		// instruction.op1_value --> Valor primer operando
 		// instruction.op1_type  --> Tipo primer operando (R->Registro #->Numero N->Ninguno)
 		// ... Igual para los otros operandos
+		*(reg+15)=*(reg+15)+1;
         if(instruction.op2_type == '#')//Se compara el tipo de dato en el operando 3
             ROR((reg+instruction.op1_value),instruction.op2_value,banderas);//Se llama la instruccion ROR
         if(instruction.op2_type == 'R')//Se compara el tipo de dato en el operando 3
@@ -138,6 +164,7 @@ void decodeInstruction(instruction_t instruction, uint32_t *reg,struct flg *band
 		// instruction.op1_value --> Valor primer operando
 		// instruction.op1_type  --> Tipo primer operando (R->Registro #->Numero N->Ninguno)
 		// ... Igual para los otros operandos
+		*(reg+15)=*(reg+15)+1;
         if(instruction.op2_type == '#')//Se compara el tipo de dato en el operando 3
             ASR((reg+instruction.op1_value),instruction.op2_value,banderas);//Se llama la instruccion ASR
         if(instruction.op2_type == 'R')//Se compara el tipo de dato en el operando 3
@@ -148,6 +175,7 @@ void decodeInstruction(instruction_t instruction, uint32_t *reg,struct flg *band
 		// instruction.op1_value --> Valor primer operando
 		// instruction.op1_type  --> Tipo primer operando (R->Registro #->Numero N->Ninguno)
 		// ... Igual para los otros operandos
+		*(reg+15)=*(reg+15)+1;
         if(instruction.op2_type == '#')//Se compara el tipo de dato en el operando 2
             BIC((reg+instruction.op1_value),instruction.op2_value,banderas);//Se llama la instruccion BIC
         if(instruction.op2_type == 'R')//Se compara el tipo de dato en el operando 2
@@ -158,6 +186,7 @@ void decodeInstruction(instruction_t instruction, uint32_t *reg,struct flg *band
 		// instruction.op1_value --> Valor primer operando
 		// instruction.op1_type  --> Tipo primer operando (R->Registro #->Numero N->Ninguno)
 		// ... Igual para los otros operandos
+		*(reg+15)=*(reg+15)+1;
         if(instruction.op2_type == '#')//Se compara el tipo de dato en el operando 2
             MVN((reg+instruction.op1_value),instruction.op2_value,banderas);//Se llama la instruccion ASR
         if(instruction.op2_type == 'R')//Se compara el tipo de dato en el operando 2
@@ -168,6 +197,7 @@ void decodeInstruction(instruction_t instruction, uint32_t *reg,struct flg *band
 		// instruction.op1_value --> Valor primer operando
 		// instruction.op1_type  --> Tipo primer operando (R->Registro #->Numero N->Ninguno)
 		// ... Igual para los otros operandos
+		*(reg+15)=*(reg+15)+1;
         if(instruction.op2_type == '#')//Se compara el tipo de dato en el operando 2
             RSB((reg+instruction.op1_value),instruction.op2_value,banderas);//Se llama la instruccion RSB
         if(instruction.op2_type == 'R')//Se compara el tipo de dato en el operando 2
@@ -178,6 +208,7 @@ void decodeInstruction(instruction_t instruction, uint32_t *reg,struct flg *band
 		// instruction.op1_value --> Valor primer operando
 		// instruction.op1_type  --> Tipo primer operando (R->Registro #->Numero N->Ninguno)
 		// ... Igual para los otros operandos
+		*(reg+15)=*(reg+15)+1;
         if(instruction.op2_type == '#')//Se compara el tipo de dato en el operando 2
             REV((reg+instruction.op1_value),instruction.op2_value,banderas);//Se llama la instruccion REV
         if(instruction.op2_type == 'R')//Se compara el tipo de dato en el operando 2
@@ -188,6 +219,7 @@ void decodeInstruction(instruction_t instruction, uint32_t *reg,struct flg *band
 		// instruction.op1_value --> Valor primer operando
 		// instruction.op1_type  --> Tipo primer operando (R->Registro #->Numero N->Ninguno)
 		// ... Igual para los otros operandos
+		*(reg+15)=*(reg+15)+1;
         if(instruction.op2_type == '#')//Se compara el tipo de dato en el operando 2
             NOP();//Se llama la instruccion NOP
         if(instruction.op2_type == 'R')//Se compara el tipo de dato en el operando 2
@@ -198,6 +230,7 @@ void decodeInstruction(instruction_t instruction, uint32_t *reg,struct flg *band
 		// instruction.op1_value --> Valor primer operando
 		// instruction.op1_type  --> Tipo primer operando (R->Registro #->Numero N->Ninguno)
 		// ... Igual para los otros operandos
+		*(reg+15)=*(reg+15)+1;
         if(instruction.op2_type == '#')//Se compara el tipo de dato en el operando 2
             REV16((reg+instruction.op1_value),instruction.op2_value,banderas);//Se llama la instruccion REV16
         if(instruction.op2_type == 'R')//Se compara el tipo de dato en el operando 2
@@ -207,6 +240,7 @@ void decodeInstruction(instruction_t instruction, uint32_t *reg,struct flg *band
 		// instruction.op1_value --> Valor primer operando
 		// instruction.op1_type  --> Tipo primer operando (R->Registro #->Numero N->Ninguno)
 		// ... Igual para los otros operandos
+		*(reg+15)=*(reg+15)+1;
         if(instruction.op2_type == '#')//Se compara el tipo de dato en el operando 2
             REVSH((reg+instruction.op1_value),instruction.op2_value,banderas);//Se llama la instruccion REVSH
         if(instruction.op2_type == 'R')//Se compara el tipo de dato en el operando 2
@@ -413,8 +447,6 @@ void decodeInstruction(instruction_t instruction, uint32_t *reg,struct flg *band
         if(instruction.op1_type == 'R')//Se compara el tipo de dato en el operando 2
             BLE((reg+15),*(reg+instruction.op1_value),banderas->zero,banderas->negativo,banderas->sobreflujo);//Se llama la instruccion B
 	}
-
-
 }
 
 
