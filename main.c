@@ -1,9 +1,10 @@
 #include <stdlib.h>
 #include "decoder.h"
-#include <curses.h>
+#include "curses.h"
 #include "funciones.h"
 #include "flags.h"
 #include "micros.h"
+#include "memoria.h"
 
 int main(void)
 {
@@ -26,6 +27,12 @@ int main(void)
 	//---------------------------//
 
     uint32_t reg[16],dim=14;
+    // Se crea un arreglo para la memoria.
+    uint8_t memoria[12];
+
+
+    //Se inicializa la memoria.
+    Init_memoria(memoria,12);
     int j;
     // Se inicializan los registros.
         for(j=0;j<=15;j++)
@@ -73,6 +80,7 @@ int main(void)
         registro(reg,dim,&banderas);//Muestra los registros y las banderas en pantalla
         move(20,55);
         printw("Presione Q para salir");
+        Mostrar_memoria(memoria,12);//Se llama la funcion que muestra la memoria en pantalla.
         ch=getch();// Espera una tecla para continuar
         instruction = getInstruction(instructions[reg[15]]); // Instrucción en la posición reg[15]
         move(9,10);
