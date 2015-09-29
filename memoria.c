@@ -2,13 +2,30 @@
 
 void Mostrar_memoria(uint8_t *memoria,int tama)
 {
-    int i;
+    int i,k,n,j,direc;
+    n=0;
+    direc=255;
 
-	    for(i=0;i<12;i++)//cinclo for para mostrar 3 registros por renglon
+    for(j=0;j<4;j++)//FOR PARA EL NUMERO DE COLUMNAS
+    {
+          for(k=0;k<4;k++)//FOR PARA EL NUMERO DE FILAS
         {
-            move(20,2+4*i);
-            printw("%.2X", *(memoria+i)); //Imprime en pantalla 3 registros.
+
+	    for(i=0;i<4;i++)//FOR PARA MOSTRAR 4 BYTES SEGUIDOS
+        {
+            move(16+2*k,2+14*j);//Se mueven las direcciones
+            attron(COLOR_PAIR(2));
+            printw("%.2X:",direc);
+            attroff(COLOR_PAIR(2));	/* Deshabilita los colores Pair 2 */
+            move(16+2*k,6+2*i+14*j);//Se mueven los paquetes de 4 Bytes
+            printw("%.2X", *(memoria+n));
+            n++;
         }
+        direc-=4;
+        }
+    }
+
+
 }
 
 void Init_memoria(uint8_t *memoria,int tama)
@@ -16,6 +33,6 @@ void Init_memoria(uint8_t *memoria,int tama)
     int i;
     for(i=0;i<tama;i++)
     {
-        *(memoria+i)=255;
+        *(memoria+i)=255;//Se inicializan la memoria en unos
     }
 }
