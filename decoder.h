@@ -8,6 +8,7 @@
 #include "funciones.h"
 #include "desplazamiento.h"
 #include "branch.h"
+#include "instruccionesm.h"
 
 typedef struct
 {
@@ -24,6 +25,7 @@ typedef struct
 	uint32_t op1_value;
 	uint32_t op2_value;
 	uint32_t op3_value;
+	uint8_t  registers_list[16];
 }instruction_t;
 
 
@@ -31,7 +33,7 @@ typedef struct
     \brief Decodifica la instrucción y la ejecuta.
     \param instruction instrucción a decodificar y ejecutar.
 */
-void decodeInstruction(instruction_t instruction, uint32_t *reg,struct flg *banderas);
+void decodeInstruction(instruction_t instruction, uint32_t *reg,struct flg *banderas,uint8_t *mem);
 
 /** \fn instruction_t getInstruction(char* instStr)
     \brief Obtiene la instrucción separada por partes.

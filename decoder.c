@@ -1,7 +1,7 @@
 #include "decoder.h"
 
 
-void decodeInstruction(instruction_t instruction, uint32_t *reg,struct flg *banderas)
+void decodeInstruction(instruction_t instruction, uint32_t *reg,struct flg *banderas,uint8_t *mem)
 {
 	if( strcmp(instruction.mnemonic,"MOVS") == 0 ){
 		// instruction.op1_value --> Valor primer operando
@@ -13,7 +13,7 @@ void decodeInstruction(instruction_t instruction, uint32_t *reg,struct flg *band
         if(instruction.op2_type == 'R')//Se compara el tipo de dato en el operando 3
             MOVS(reg+instruction.op1_value,*(reg+instruction.op2_value),banderas);//Se llama la instruccion MOVS
 	}
-	
+
 		if( strcmp(instruction.mnemonic,"MOV") == 0 ){
 		// instruction.op1_value --> Valor primer operando
 		// instruction.op1_type  --> Tipo primer operando (R->Registro #->Numero N->Ninguno)
@@ -24,7 +24,7 @@ void decodeInstruction(instruction_t instruction, uint32_t *reg,struct flg *band
         if(instruction.op2_type == 'R')//Se compara el tipo de dato en el operando 3
             MOV(reg+instruction.op1_value,*(reg+instruction.op2_value));//Se llama la instruccion MOVS
 	}
-	
+
     if( strcmp(instruction.mnemonic,"CMP") == 0 ){
 		// instruction.op1_value --> Valor primer operando
 		// instruction.op1_type  --> Tipo primer operando (R->Registro #->Numero N->Ninguno)
@@ -447,12 +447,24 @@ void decodeInstruction(instruction_t instruction, uint32_t *reg,struct flg *band
         if(instruction.op1_type == 'R')//Se compara el tipo de dato en el operando 2
             BLE((reg+15),*(reg+instruction.op1_value),banderas->zero,banderas->negativo,banderas->sobreflujo);//Se llama la instruccion B
 	}
+	    if( strcmp(instruction.mnemonic,"PUSH") == 0 )
+        {
+        *(reg+15)=*(reg+15)+1;
+		// instruction.op1_value --> Valor primer operando
+		// instruction.op1_type  --> Tipo primer operando (R->Registro #->Numero N->Ninguno)
+		// ... Igual para los otros operandos
+		PUSH(mem,reg,instruction.registers_list);
+        }
 }
-
 
 instruction_t getInstruction(char* instStr)
 {
-	instruction_t instruction;
+	instruction_t instruction=
+	{
+		.registers_list = {0},
+		.op3_type  = 'N',
+		.op3_value = 0
+	};
 	char* split = (char*)malloc(strlen(instStr)+1);
 	int num=0;
 
@@ -466,28 +478,48 @@ instruction_t getInstruction(char* instStr)
 	{
 		switch(num){
 			case 1:
-				instruction.op1_type  = split[0];
-				instruction.op1_value = (uint32_t)strtol(split+1, NULL, 0);
+				if(split[0] == '{'){
+					instruction.op1_type  = split[0];
+					split++;
+					do{
+						if(split[0]=='L')
+							instruction.registers_list[14] = 1;
+						else if(split[0]=='P')
+							instruction.registers_list[15] = 1;
+						else
+							instruction.registers_list[(uint8_t)strtoll(split+1, NULL, 0)] = 1;
+
+						split = strtok(NULL, ",");
+					}while(split != NULL);
+				}else{
+					instruction.op1_type  = split[0];
+					instruction.op1_value = (uint32_t)strtoll(split+1, NULL, 0);
+				}
 				break;
 
 			case 2:
 				instruction.op2_type  = split[0];
-				instruction.op2_value = (uint32_t)strtol(split+1, NULL, 0);
+				instruction.op2_value = (uint32_t)strtoll(split+1, NULL, 0);
 				break;
 
 			case 3:
 				instruction.op3_type  = split[0];
-				instruction.op3_value = (uint32_t)strtol(split+1, NULL, 0);
+				instruction.op3_value = (uint32_t)strtoll(split+1, NULL, 0);
 				break;
 		}
-
-		split = strtok(NULL, " ,.");
-		num++;
+		if(split != NULL){
+			split = strtok(NULL, " ,.");
+			num++;
+		}
 	}
 
-	if(num==3){
-		instruction.op3_type  = 'N';
-		instruction.op3_value = 0;
+	if(instruction.op1_type == 'L'){
+		instruction.op1_value = 14;
+		instruction.op1_type = 'R';
+	}
+
+	if(instruction.op1_type == '{'){
+		instruction.op1_type = 'P';
 	}
 
 	free(split);
@@ -534,3 +566,4 @@ int countLines(FILE* fp)
 
 	return lines;
 }
+

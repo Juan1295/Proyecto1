@@ -1,10 +1,10 @@
 #include <stdlib.h>
 #include "decoder.h"
-#include <curses.h>
+#include "curses.h"
 #include "funciones.h"
 #include "flags.h"
 #include "micros.h"
-#include ""memoria.h""
+#include "memoria.h"
 
 int main(void)
 {
@@ -41,6 +41,7 @@ int main(void)
     }
 
     j=0;
+    reg[13]=256;
     struct flg banderas;
 
     // Se inicializan las banderas.
@@ -84,7 +85,9 @@ int main(void)
         printw("PC=%u",reg[15]*2);//Imprime el registro
         move(17,65);
         printw("LR=%u",reg[14]*2);//Imprime el registro
-        decodeInstruction(instruction,reg,&banderas); // Debe ser modificada de acuerdo a cada código
+        move(19,65);
+        printw("SP=%u",reg[13]);
+        decodeInstruction(instruction,reg,&banderas,memoria); // Debe ser modificada de acuerdo a cada código
     }
 
     /* Ejemplo de uso
