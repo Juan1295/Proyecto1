@@ -455,6 +455,14 @@ void decodeInstruction(instruction_t instruction, uint32_t *reg,struct flg *band
 		// ... Igual para los otros operandos
 		PUSH(mem,reg,instruction.registers_list);
         }
+        if( strcmp(instruction.mnemonic,"POP") == 0 )
+        {
+        *(reg+15)=*(reg+15)+1;
+		// instruction.op1_value --> Valor primer operando
+		// instruction.op1_type  --> Tipo primer operando (R->Registro #->Numero N->Ninguno)
+		// ... Igual para los otros operandos
+		POP(mem,reg,instruction.registers_list);
+        }
 }
 
 instruction_t getInstruction(char* instStr)
