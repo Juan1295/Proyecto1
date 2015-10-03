@@ -463,6 +463,45 @@ void decodeInstruction(instruction_t instruction, uint32_t *reg,struct flg *band
 		// ... Igual para los otros operandos
 		POP(mem,reg,instruction.registers_list);
         }
+        if( strcmp(instruction.mnemonic,"LDR") == 0 )
+        {
+        *(reg+15)=*(reg+15)+1;
+		// instruction.op1_value --> Valor primer operando
+		// instruction.op1_type  --> Tipo primer operando (R->Registro #->Numero N->Ninguno)
+		// ... Igual para los otros operandos
+            if(instruction.op2_type == '=')//LDR con funcion de igualar
+            {
+                MOV((reg+instruction.op1_value),instruction.op2_value);
+            }
+            if(instruction.op2_type == 'S')//LDR que trabaja con sp
+            {
+                if(instruction.op3_value<256)//Se evalua que el inmediato sea de 8 bits
+                {
+                    LDR((reg+instruction.op1_value),*(reg+13),(instruction.op3_value<<2),mem);
+                }
+            }
+            if(instruction.op2_type == 'P')//LDR que trabaja con pc
+            {
+                if(instruction.op3_value<256)//Se evalua que el inmediato sea de 8 bits
+                {
+                    LDR((reg+instruction.op1_value),*(reg+15),(instruction.op3_value<<2),mem);
+                }
+            }
+            if(instruction.op2_type == 'R')//LDR que trabaja con registros
+            {
+                if(instruction.op3_type == 'R')//LDR que trabaja con dos registros
+                {
+                    LDR((reg+instruction.op1_value),*(reg+instruction.op2_value),*(reg+instruction.op3_value),mem);
+                }
+                else//LDR que trabaja con un registro y un inmediato de 5 bits
+                {
+                    if(instruction.op3_value<32)//Se evalua que el inmediato sea de 5 bits
+                    {
+                        LDR((reg+instruction.op1_value),*(reg+instruction.op2_value),(instruction.op3_value<<2),mem);
+                    }
+                }
+            }
+        }
 }
 
 instruction_t getInstruction(char* instStr)

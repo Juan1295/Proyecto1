@@ -16,7 +16,7 @@ void PUSH(uint8_t *mem,uint32_t *reg,uint8_t ord[]);
 
 //Se crea la funcion POP
 /**
-* \brief Función que estrae de la memoria.
+* \brief Función que extrae de la memoria.
 * \param *mem puntero del arreglo de memoria.
 * \param *reg puntero del arreglo de registros.
 * \param *ord puntero de los registros a mover
@@ -24,3 +24,14 @@ void PUSH(uint8_t *mem,uint32_t *reg,uint8_t ord[]);
 */
 
 void POP(uint8_t *mem,uint32_t *reg,uint8_t ord[]);
+
+//Se crea la funcion LDR
+/**
+* \brief Función que extrae de una direccion de memoria especifica.
+* \param *rx puntero del registro donde se guarda la informacion.
+* \param num1 offset para buscar la direccion de memoria.
+* \param num2 offset para buscar la direccion de memoria.
+* \return No retorna ningun parametro.
+*/
+
+void LDR(uint32_t *rx,uint32_t num1,uint32_t num2,uint8_t *mem);

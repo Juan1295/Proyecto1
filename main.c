@@ -1,6 +1,6 @@
 #include <stdlib.h>
 #include "decoder.h"
-#include "curses.h"
+#include <curses.h>
 #include "funciones.h"
 #include "flags.h"
 #include "micros.h"

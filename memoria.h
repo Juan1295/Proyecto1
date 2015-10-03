@@ -1,6 +1,6 @@
 #ifndef MEMORIA_H
 #define MEMORIA_H
-#include <curses.h>
+#include "curses.h"
 #include "stdint.h"
 
 

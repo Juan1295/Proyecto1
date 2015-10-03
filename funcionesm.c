@@ -2,8 +2,8 @@
 
 void PUSH(uint8_t *mem,uint32_t *reg,uint8_t ord[])
 {
-    int i,j,k=256-reg[13];//Contador de ciclo for.
-    uint32_t aux,aux1,aux2,aux3,aux4;
+    int i,j;//Contador de ciclo for.
+    uint32_t aux,aux1,aux2,aux3,aux4,k=256-reg[13];
     for(i=0;i<16;i++)
     {
         if(ord[i]==1)
@@ -52,9 +52,9 @@ void PUSH(uint8_t *mem,uint32_t *reg,uint8_t ord[])
 
 void POP(uint8_t *mem,uint32_t *reg,uint8_t ord[])
 {
-    int i,k; //Contadores.
-    uint32_t aux1,aux2,aux3;//auxiliares tipo uint32_t para realizar corrimientos.
-    k=255-reg[13];//Halla el valor de SP
+    int i; //Contadores.
+    uint32_t aux1,aux2,aux3,k;//auxiliares tipo uint32_t para realizar corrimientos.
+    k=256-reg[13];//Halla el valor de SP
     for(i=0;i<16;i++)
     {
         if(ord[i]==1)
@@ -69,5 +69,19 @@ void POP(uint8_t *mem,uint32_t *reg,uint8_t ord[])
             k-=4;//Baja 4 posiciones en la memoria.
         }
     }
-    reg[13]=k+257;//guardo el registro SP.
+    reg[13]=256-k;//guardo el registro SP.
+}
+
+void LDR(uint32_t *rx,uint32_t num1,uint32_t num2,uint8_t *mem)
+{
+    uint32_t dc,i,aux1,aux2,aux3;
+    dc=num1+num2;
+    i=256-dc;
+    aux1=mem[i-3];
+    aux1=(aux1)<<24;
+    aux2=mem[i-2];
+    aux2=(aux1)<<16;
+    aux3=mem[i-1];
+    aux3=(aux1)<<8;
+    *rx=(aux1)|(aux2)|(aux3)|(mem[i]);//Guaarda en el registro lo encontrado en las 4 primeras posiciones de memoria
 }
