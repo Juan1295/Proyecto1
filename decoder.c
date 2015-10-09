@@ -526,16 +526,99 @@ void decodeInstruction(instruction_t instruction, uint32_t *reg,struct flg *band
             // instruction.op1_value --> Valor primer operando
             // instruction.op1_type  --> Tipo primer operando (R->Registro #->Numero N->Ninguno)
             // ... Igual para los otros operandos
-            if((instruction.op2_type == 'R')&&(instruction.op3_type == '#'))//LDRB entre registros e inmediato de 5 bits
+            if((instruction.op2_type == 'R')&&(instruction.op3_type == '#'))//LDRH entre registros e inmediato de 5 bits
             {
                 if(instruction.op3_value<32)//Se evalua que el inmediato sea de 5 bits
                 {
                     LDRH((reg+instruction.op1_value),*(reg+instruction.op2_value),(instruction.op3_value<<1),mem);
                 }
             }
-            if((instruction.op2_type == 'R')&&(instruction.op3_type == 'R'))//LDRB entre registros
+            if((instruction.op2_type == 'R')&&(instruction.op3_type == 'R'))//LDRH entre registros
             {
                 LDRH((reg+instruction.op1_value),*(reg+instruction.op2_value),*(reg+instruction.op3_value),mem);
+            }
+        }
+        if( strcmp(instruction.mnemonic,"LDRSB") == 0 )
+        {
+            *(reg+15)=*(reg+15)+1;
+            // instruction.op1_value --> Valor primer operando
+            // instruction.op1_type  --> Tipo primer operando (R->Registro #->Numero N->Ninguno)
+            // ... Igual para los otros operandos
+            if((instruction.op2_type == 'R')&&(instruction.op3_type == 'R'))//LDRSB
+            {
+                LDRSB((reg+instruction.op1_value),*(reg+instruction.op2_value),*(reg+instruction.op3_value),mem);
+            }
+        }
+        if( strcmp(instruction.mnemonic,"LDRSH") == 0 )
+        {
+            *(reg+15)=*(reg+15)+1;
+            // instruction.op1_value --> Valor primer operando
+            // instruction.op1_type  --> Tipo primer operando (R->Registro #->Numero N->Ninguno)
+            // ... Igual para los otros operandos
+            if((instruction.op2_type == 'R')&&(instruction.op3_type == 'R'))//LDRSH entre registros
+            {
+                LDRSH((reg+instruction.op1_value),*(reg+instruction.op2_value),*(reg+instruction.op3_value),mem);
+            }
+        }
+        if( strcmp(instruction.mnemonic,"STR") == 0 )
+        {
+            *(reg+15)=*(reg+15)+1;
+            // instruction.op1_value --> Valor primer operando
+            // instruction.op1_type  --> Tipo primer operando (R->Registro #->Numero N->Ninguno)
+            // ... Igual para los otros operandos
+            if((instruction.op2_type == 'R')&&(instruction.op3_type == '#'))//STR entre registros e inmediato de 5 bits
+            {
+                if(instruction.op3_value<32)//Se evalua que el inmediato sea de 5 bits
+                {
+                    STR(*(reg+instruction.op1_value),*(reg+instruction.op2_value),(instruction.op3_value<<2),mem);
+                }
+            }
+            if((instruction.op2_type == 'R')&&(instruction.op3_type == 'R'))//STR entre registros
+            {
+                STR(*(reg+instruction.op1_value),*(reg+instruction.op2_value),*(reg+instruction.op3_value),mem);
+            }
+            if((instruction.op2_type == 'S')&&(instruction.op3_type == '#'))//STR entre sp e inmediato de 8 bits
+            {
+                if(instruction.op3_value<256)//Se evalua que el inmediato sea de 8 bits
+                {
+                    STR(*(reg+instruction.op1_value),*(reg+instruction.op2_value),(instruction.op3_value<<2),mem);
+                }
+            }
+        }
+        if( strcmp(instruction.mnemonic,"STRB") == 0 )
+        {
+            *(reg+15)=*(reg+15)+1;
+            // instruction.op1_value --> Valor primer operando
+            // instruction.op1_type  --> Tipo primer operando (R->Registro #->Numero N->Ninguno)
+            // ... Igual para los otros operandos
+            if((instruction.op2_type == 'R')&&(instruction.op3_type == '#'))//STR entre registros e inmediato de 5 bits
+            {
+                if(instruction.op3_value<32)//Se evalua que el inmediato sea de 5 bits
+                {
+                    STRB(*(reg+instruction.op1_value),*(reg+instruction.op2_value),instruction.op3_value,mem);
+                }
+            }
+            if((instruction.op2_type == 'R')&&(instruction.op3_type == 'R'))//STR entre registros
+            {
+                STRB(*(reg+instruction.op1_value),*(reg+instruction.op2_value),*(reg+instruction.op3_value),mem);
+            }
+        }
+        if( strcmp(instruction.mnemonic,"STRH") == 0 )
+        {
+            *(reg+15)=*(reg+15)+1;
+            // instruction.op1_value --> Valor primer operando
+            // instruction.op1_type  --> Tipo primer operando (R->Registro #->Numero N->Ninguno)
+            // ... Igual para los otros operandos
+            if((instruction.op2_type == 'R')&&(instruction.op3_type == '#'))//STR entre registros e inmediato de 5 bits
+            {
+                if(instruction.op3_value<32)//Se evalua que el inmediato sea de 5 bits
+                {
+                    STRH(*(reg+instruction.op1_value),*(reg+instruction.op2_value),instruction.op3_value,mem);
+                }
+            }
+            if((instruction.op2_type == 'R')&&(instruction.op3_type == 'R'))//STR entre registros
+            {
+                STRH(*(reg+instruction.op1_value),*(reg+instruction.op2_value),*(reg+instruction.op3_value),mem);
             }
         }
 }
