@@ -502,6 +502,42 @@ void decodeInstruction(instruction_t instruction, uint32_t *reg,struct flg *band
                 }
             }
         }
+        if( strcmp(instruction.mnemonic,"LDRB") == 0 )
+        {
+            *(reg+15)=*(reg+15)+1;
+            // instruction.op1_value --> Valor primer operando
+            // instruction.op1_type  --> Tipo primer operando (R->Registro #->Numero N->Ninguno)
+            // ... Igual para los otros operandos
+            if((instruction.op2_type == 'R')&&(instruction.op3_type == '#'))//LDRB entre registros e inmediato de 5 bits
+            {
+                if(instruction.op3_value<32)//Se evalua que el inmediato sea de 5 bits
+                {
+                    LDRB((reg+instruction.op1_value),*(reg+instruction.op2_value),instruction.op3_value,mem);
+                }
+            }
+            if((instruction.op2_type == 'R')&&(instruction.op3_type == 'R'))//LDRB entre registros
+            {
+                LDRB((reg+instruction.op1_value),*(reg+instruction.op2_value),*(reg+instruction.op3_value),mem);
+            }
+        }
+        if( strcmp(instruction.mnemonic,"LDRH") == 0 )
+        {
+            *(reg+15)=*(reg+15)+1;
+            // instruction.op1_value --> Valor primer operando
+            // instruction.op1_type  --> Tipo primer operando (R->Registro #->Numero N->Ninguno)
+            // ... Igual para los otros operandos
+            if((instruction.op2_type == 'R')&&(instruction.op3_type == '#'))//LDRB entre registros e inmediato de 5 bits
+            {
+                if(instruction.op3_value<32)//Se evalua que el inmediato sea de 5 bits
+                {
+                    LDRH((reg+instruction.op1_value),*(reg+instruction.op2_value),(instruction.op3_value<<1),mem);
+                }
+            }
+            if((instruction.op2_type == 'R')&&(instruction.op3_type == 'R'))//LDRB entre registros
+            {
+                LDRH((reg+instruction.op1_value),*(reg+instruction.op2_value),*(reg+instruction.op3_value),mem);
+            }
+        }
 }
 
 instruction_t getInstruction(char* instStr)
@@ -545,6 +581,9 @@ instruction_t getInstruction(char* instStr)
 				break;
 
 			case 2:
+                if(split[0] == '[')
+					split++;
+
 				instruction.op2_type  = split[0];
 				instruction.op2_value = (uint32_t)strtoll(split+1, NULL, 0);
 				break;
