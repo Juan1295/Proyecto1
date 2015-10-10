@@ -33,7 +33,7 @@ int main(void)
 
     //Se inicializa la memoria.
     Init_memoria(memoria,64);
-    int j;
+    int j,bn=0,interrup[32]={0,0,0,1,1,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
     // Se inicializan los registros.
         for(j=0;j<=15;j++)
     {
@@ -72,7 +72,7 @@ int main(void)
     registro(reg,dim,&banderas);
     while(ch!='q')
     {
-
+        NVIC(interrup,&bn,reg,&banderas,mem);
         registro(reg,dim,&banderas);//Muestra los registros y las banderas en pantalla
         move(5,10);
         printw("Presione Q para salir");
