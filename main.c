@@ -1,10 +1,11 @@
 #include <stdlib.h>
 #include "decoder.h"
-#include "curses.h"
+#include <curses.h>
 #include "funciones.h"
 #include "flags.h"
 #include "micros.h"
 #include "memoria.h"
+#include "interrupciones.h"
 
 int main(void)
 {
@@ -72,7 +73,7 @@ int main(void)
     registro(reg,dim,&banderas);
     while(ch!='q')
     {
-        NVIC(interrup,&bn,reg,&banderas,mem);
+       // NVIC(&interrup,&bn,&reg,&banderas,&memoria);
         registro(reg,dim,&banderas);//Muestra los registros y las banderas en pantalla
         move(5,10);
         printw("Presione Q para salir");

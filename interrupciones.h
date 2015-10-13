@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdint.h>
+#include "flags.h"
 
 /**
 * \brief Funcion NVIC:se encarga de revisar las interrupciones y comunicarlas con el prosesador.
@@ -13,7 +14,7 @@
 * \return No retorna.
 */
 
-void NVIC(int *interrup,int *bn,uint32_t *reg,struct flg *banderas,*mem);
+void NVIC(int *interrup,int *bn,uint32_t *reg,struct flg *banderas,uint8_t *mem);
 
 /**
 * \brief Funcion RES:se encarga de restaurar los valores y la continuacion del programa.

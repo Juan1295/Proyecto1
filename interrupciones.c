@@ -125,8 +125,8 @@ void CAR(uint8_t *mem,uint32_t *reg,struct flg *banderas)
         mem[k+2]=1;
     else
         mem[k+2]=0;
-    if(banderas->banderas->zero)
+    if(banderas->zero == '1')
         mem[k+3]=1;
     else
-        mem[k+3]=0
+        mem[k+3]=0;
 }
