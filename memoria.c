@@ -8,7 +8,7 @@ void Mostrar_memoria(uint8_t *memoria,int tama)
 
     for(j=0;j<4;j++)//FOR PARA EL NUMERO DE COLUMNAS
     {
-          for(k=0;k<4;k++)//FOR PARA EL NUMERO DE FILAS
+          for(k=0;k<16;k++)//FOR PARA EL NUMERO DE FILAS
         {
 
 	    for(i=0;i<4;i++)//FOR PARA MOSTRAR 4 BYTES SEGUIDOS
