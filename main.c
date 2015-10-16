@@ -77,8 +77,12 @@ int main(void)
         registro(reg,dim,&banderas);//Muestra los registros y las banderas en pantalla
         move(5,10);
         printw("Presione Q para salir");
-        Mostrar_memoria(memoria,64);//Se llama la funcion que muestra la memoria en pantalla.
+        Mostrar_memoria(memoria,256);//Se llama la funcion que muestra la memoria en pantalla.
         ch=getch();// Espera una tecla para continuar
+        if(ch == 'i')
+        {
+            interrup[0]=1;
+        }
         instruction = getInstruction(instructions[reg[15]]); // Instrucción en la posición reg[15]
         move(9,10);
         printw("%s",instructions[reg[15]]);//Imprime la instruccion
@@ -89,7 +93,7 @@ int main(void)
         move(19,75);
         printw("SP=%X",reg[13]);
         decodeInstruction(instruction,reg,&banderas,memoria); // Debe ser modificada de acuerdo a cada código
-        //NVIC(&interrup,&bn,&reg,&banderas,&memoria);
+        NVIC(&interrup,&bn,&reg,&banderas,&memoria);
     }
 
     /* Ejemplo de uso

@@ -19,8 +19,8 @@ void NVIC(int *interrup,int *bn,uint32_t *reg,struct flg *banderas,uint8_t *mem)
             {
                 CAR(mem,reg,banderas);
                 reg[15]=i+1;
+                *(interrup+i)=0;
                 reg[14]=0xffffffff;
-                interrup[i]=0;
                 *bn=1;
                 break;
             }
@@ -41,13 +41,13 @@ void RES(uint8_t *mem,uint32_t *reg,struct flg *banderas)
     else
         banderas->sobreflujo='0';
     if(mem[k+2]==1)
-        banderas->negativo=1;
+        banderas->negativo='1';
     else
-        banderas->negativo=1;
+        banderas->negativo='1';
     if(mem[k+3]==1)
-        banderas->carry=1;
+        banderas->carry='1';
     else
-        banderas->carry=0;
+        banderas->carry='0';
 
     k=0;
     for(i=0;i<16;i++)
