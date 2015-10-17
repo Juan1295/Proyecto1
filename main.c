@@ -30,6 +30,9 @@ int main(void)
     uint32_t reg[16],dim=14;
     // Se crea un arreglo para la memoria.
     uint8_t memoria[256];
+	// Se crea una variable para mostrar los comandos en hex
+    uint16_t comando;
+    comando=0;
 
 
     //Se inicializa la memoria.
@@ -93,6 +96,8 @@ int main(void)
         }
         instruction = getInstruction(instructions[reg[15]]); // Instrucción en la posición reg[15]
         decodeInstruction(instruction,reg,&banderas,memoria); // Debe ser modificada de acuerdo a cada código
+		move (9,30);
+        printw("0x%0.4X",comando);
         NVIC(interrup,&bn,reg,&banderas,memoria);
     }
 
