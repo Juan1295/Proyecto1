@@ -6,6 +6,9 @@
 #include "micros.h"
 #include "memoria.h"
 #include "interrupciones.h"
+#include "io.h"
+
+extern uint8_t irq[16];
 
 int main(void)
 {
@@ -37,7 +40,7 @@ int main(void)
 
     //Se inicializa la memoria.
     Init_memoria(memoria,256);
-    int j,bn=0,interrup[32]={1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+    int j,bn=0;
     // Se inicializan los registros.
         for(j=0;j<=15;j++)
     {
@@ -74,9 +77,21 @@ int main(void)
 	attroff(COLOR_PAIR(1));	/* Deshabilita los colores Pair 2 */
 
     registro(reg,dim,&banderas);
+
+    border( ACS_VLINE, ACS_VLINE,
+            ACS_HLINE, ACS_HLINE,
+            ACS_ULCORNER, ACS_URCORNER,
+            ACS_LLCORNER, ACS_LRCORNER	);
+    refresh();
+
     while(ch!='q')
     {
         clear();
+        initIO();showPorts();
+        border( ACS_VLINE, ACS_VLINE,
+        ACS_HLINE, ACS_HLINE,
+        ACS_ULCORNER, ACS_URCORNER,
+        ACS_LLCORNER, ACS_LRCORNER	);
         registro(reg,dim,&banderas);//Muestra los registros y las banderas en pantalla
         move(5,10);
         printw("Presione Q para salir");
@@ -90,15 +105,11 @@ int main(void)
         move(19,75);
         printw("SP=%X",reg[13]);
         ch=getch();// Espera una tecla para continuar
-        if(ch == 'i')
-        {
-            interrup[0]=1;
-        }
         instruction = getInstruction(instructions[reg[15]]); // Instrucción en la posición reg[15]
-        decodeInstruction(instruction,reg,&banderas,memoria); // Debe ser modificada de acuerdo a cada código
+        decodeInstruction(instruction,reg,&banderas,memoria,&comando); // Debe ser modificada de acuerdo a cada código
 		move (9,30);
         printw("0x%0.4X",comando);
-        NVIC(interrup,&bn,reg,&banderas,memoria);
+        NVIC(irq,&bn,reg,&banderas,memoria);
     }
 
     /* Ejemplo de uso

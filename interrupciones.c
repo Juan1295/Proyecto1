@@ -1,6 +1,6 @@
 #include "interrupciones.h"
 
-void NVIC(int *interrup,int *bn,uint32_t *reg,struct flg *banderas,uint8_t *mem)
+void NVIC(uint8_t *interrup,int *bn,uint32_t *reg,struct flg *banderas,uint8_t *mem)
 {
     int i;
     if(*bn==1)
@@ -13,7 +13,7 @@ void NVIC(int *interrup,int *bn,uint32_t *reg,struct flg *banderas,uint8_t *mem)
     }
     else
     {
-        for(i=0;i<32;i++)
+        for(i=0;i<16;i++)
         {
             if(interrup[i] == 1)
             {

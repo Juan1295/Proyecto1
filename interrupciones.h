@@ -14,7 +14,7 @@
 * \return No retorna.
 */
 
-void NVIC(int *interrup,int *bn,uint32_t *reg,struct flg *banderas,uint8_t *mem);
+void NVIC(uint8_t *interrup,int *bn,uint32_t *reg,struct flg *banderas,uint8_t *mem);
 
 /**
 * \brief Funcion RES:se encarga de restaurar los valores y la continuacion del programa.
