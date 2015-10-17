@@ -1,6 +1,6 @@
 #include <stdlib.h>
 #include "decoder.h"
-#include "curses.h"
+#include <curses.h>
 #include "funciones.h"
 #include "flags.h"
 #include "micros.h"
@@ -34,7 +34,7 @@ int main(void)
 
     //Se inicializa la memoria.
     Init_memoria(memoria,256);
-    int j,bn=0,interrup[32]={1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+    int j,bn=0,interrup[32]={1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
     // Se inicializan los registros.
         for(j=0;j<=15;j++)
     {
@@ -73,17 +73,11 @@ int main(void)
     registro(reg,dim,&banderas);
     while(ch!='q')
     {
-
+        clear();
         registro(reg,dim,&banderas);//Muestra los registros y las banderas en pantalla
         move(5,10);
         printw("Presione Q para salir");
         Mostrar_memoria(memoria,256);//Se llama la funcion que muestra la memoria en pantalla.
-        ch=getch();// Espera una tecla para continuar
-        if(ch == 'i')
-        {
-            interrup[0]=1;
-        }
-        instruction = getInstruction(instructions[reg[15]]); // Instrucción en la posición reg[15]
         move(9,10);
         printw("%s",instructions[reg[15]]);//Imprime la instruccion
         move(19,65);
@@ -92,8 +86,14 @@ int main(void)
         printw("LR=%u",reg[14]*2);//Imprime el registro
         move(19,75);
         printw("SP=%X",reg[13]);
+        ch=getch();// Espera una tecla para continuar
+        if(ch == 'i')
+        {
+            interrup[0]=1;
+        }
+        instruction = getInstruction(instructions[reg[15]]); // Instrucción en la posición reg[15]
         decodeInstruction(instruction,reg,&banderas,memoria); // Debe ser modificada de acuerdo a cada código
-        NVIC(&interrup,&bn,&reg,&banderas,&memoria);
+        NVIC(interrup,&bn,reg,&banderas,memoria);
     }
 
     /* Ejemplo de uso

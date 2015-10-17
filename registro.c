@@ -3,7 +3,7 @@
 # include <stdint.h>
 #include "colors.h"
 #include "micros.h"
-#include <curses.h>
+#include "curses.h"
 
 
 //Se crea la funcion registro.
@@ -33,6 +33,9 @@ void registro(uint32_t reg[],size_t dim,struct flg *banderas)
         }
     printw("\n");//Salta de linea despues de imprimir los 3 registros.
 	}
+	move(10+i,2);
+    printw("R%-2d:",n);//Muestra que numero de registro se va a presentar
+    printw("%.8X\t", reg[n]); //Imprime en pantalla 3 registros.
     // Para mostrar laas banderas
     move(10,55);
     printw("Z=%c",banderas->zero);

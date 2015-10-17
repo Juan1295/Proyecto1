@@ -5,7 +5,7 @@ void NVIC(int *interrup,int *bn,uint32_t *reg,struct flg *banderas,uint8_t *mem)
     int i;
     if(*bn==1)
     {
-        if(*(reg+15) == 0xffffffff)
+        if(reg[15] == 0xffffffff)
         {
             *bn=0;
             RES(mem,reg,banderas);
@@ -19,7 +19,7 @@ void NVIC(int *interrup,int *bn,uint32_t *reg,struct flg *banderas,uint8_t *mem)
             {
                 CAR(mem,reg,banderas);
                 reg[15]=i+1;
-                *(interrup+i)=0;
+                interrup[i]=0;
                 reg[14]=0xffffffff;
                 *bn=1;
                 break;
@@ -40,16 +40,16 @@ void RES(uint8_t *mem,uint32_t *reg,struct flg *banderas)
         banderas->sobreflujo='1';
     else
         banderas->sobreflujo='0';
-    if(mem[k+2]==1)
+    if(mem[k-2]==1)
         banderas->negativo='1';
     else
-        banderas->negativo='1';
-    if(mem[k+3]==1)
+        banderas->negativo='0';
+    if(mem[k-3]==1)
         banderas->carry='1';
     else
         banderas->carry='0';
 
-    k=0;
+    k=3;
     for(i=0;i<16;i++)
     {
         if(ord[i]==1)
@@ -61,7 +61,7 @@ void RES(uint8_t *mem,uint32_t *reg,struct flg *banderas)
             aux3=mem[k-1];
             aux3=(aux3)<<8;
             reg[i]=(aux1)|(aux2)|(aux3)|(mem[k]);//Guaarda en el registro lo encontrado en las 4 primeras posiciones de memoria
-            k-=4;//Baja 4 posiciones en la memoria.
+            k+=4;//Sube 4 posiciones en la memoria.
         }
     }
 }

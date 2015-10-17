@@ -147,8 +147,8 @@ void STR(uint32_t rx,uint32_t num1,uint32_t num2,uint8_t *mem)
 {
     int j;//Contador de ciclo for.
     uint32_t aux,aux1,aux2,aux3,aux4,k,dc;
-    dc=num1+num2;
-    k=255-dc;
+    dc=num1+num2+4;
+    k=256-dc;
     aux=0;//Inicializo aux en cero para no contar con basura.
     //Segundo bloque que guarda los bits de ra situados entre el bit 0 y 7.
     for(j=0;j<8;j++)
