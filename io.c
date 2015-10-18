@@ -133,10 +133,13 @@ void showPorts(void)
 				move(y+(j<<1)+3, x+(i<<1)+8);
 			if( PA[j] & 0x80>>i )
 			{
+
+                init_pair(REDBLACK, COLOR_RED, COLOR_BLACK);
 				attron(COLOR_PAIR(REDBLACK));
 				addch(ACS_CKBOARD);
 				attroff(COLOR_PAIR(REDBLACK));
 			}else{
+                init_pair(BLUEBLACK, COLOR_BLUE, COLOR_BLACK);
 				attron(COLOR_PAIR(BLUEBLACK));
 				addch(ACS_CKBOARD);
 				attroff(COLOR_PAIR(BLUEBLACK));

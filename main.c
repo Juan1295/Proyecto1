@@ -1,6 +1,6 @@
 #include <stdlib.h>
 #include "decoder.h"
-#include "curses.h"
+#include <curses.h>
 #include "funciones.h"
 #include "flags.h"
 #include "micros.h"
@@ -9,6 +9,9 @@
 #include "io.h"
 
 extern uint8_t irq[16];
+extern port_t PORTA;
+extern port_t PORTB;
+
 
 int main(void)
 {
@@ -30,12 +33,15 @@ int main(void)
 		instructions = read.array; /* Arreglo con las instrucciones */
 	//---------------------------//
 
+
+    initIO();
     uint32_t reg[16],dim=14;
     // Se crea un arreglo para la memoria.
     uint8_t memoria[256];
 	// Se crea una variable para mostrar los comandos en hex
     uint16_t comando;
     comando=0;
+    char port;
 
 
     //Se inicializa la memoria.
@@ -85,10 +91,10 @@ int main(void)
 
     while(ch!='s')
     {
-        ch=getch();
+        clear();
         move(2,34);
         printw("Emulador Cortex-M0");
-        initIO();showPorts();//
+        showPorts();
         registro(reg,dim,&banderas);//Muestra los registros y las banderas en pantalla
         move(5,10);
         printw("Presione S para salir");
@@ -106,11 +112,191 @@ int main(void)
         instruction = getInstruction(instructions[reg[15]]); // Instrucción en la posición reg[15]
         decodeInstruction(instruction,reg,&banderas,memoria,&comando); // Debe ser modificada de acuerdo a cada código
         NVIC(irq,&bn,reg,&banderas,memoria);
-        for(i=0;i<16;i++)
+        ch=getch();
+        if(ch=='a')
         {
-            if(ch==97+i)
+            port=getch();
+            if(port=='0')
             {
-                irq[i]=1;
+                if((PORTA.Pins&1)==0)
+                {
+                    changePinPortA(0,HIGH);
+                }
+                else
+                {
+                    changePinPortA(0,LOW);
+                }
+            }
+            if(port=='1')
+            {
+                if((PORTA.Pins&1<<1)==0)
+                {
+                    changePinPortA(1,HIGH);
+                }
+                else
+                {
+                    changePinPortA(1,LOW);
+                }
+            }
+            if(port=='2')
+            {
+                if((PORTA.Pins&1<<2)==0)
+                {
+                    changePinPortA(2,HIGH);
+                }
+                else
+                {
+                    changePinPortA(2,LOW);
+                }
+            }
+            if(port=='3')
+            {
+                if((PORTA.Pins&1<<3)==0)
+                {
+                    changePinPortA(3,HIGH);
+                }
+                else
+                {
+                    changePinPortA(3,LOW);
+                }
+            }
+            if(port=='4')
+            {
+                if((PORTA.Pins&1<<4)==0)
+                {
+                    changePinPortA(4,HIGH);
+                }
+                else
+                {
+                    changePinPortA(4,LOW);
+                }
+            }
+            if(port=='5')
+            {
+                if((PORTA.Pins&1<<5)==0)
+                {
+                    changePinPortA(5,HIGH);
+                }
+                else
+                {
+                    changePinPortA(5,LOW);
+                }
+            }
+            if(port=='6')
+            {
+                if((PORTA.Pins&1<<6)==0)
+                {
+                    changePinPortA(6,HIGH);
+                }
+                else
+                {
+                    changePinPortA(6,LOW);
+                }
+            }
+
+            if(port=='7')
+            {
+                if((PORTA.Pins&1<<7)==0)
+                {
+                    changePinPortA(7,HIGH);
+                }
+                else
+                {
+                    changePinPortA(7,LOW);
+                }
+            }
+        }
+      if(ch=='b')
+        {
+            port=getch();
+            if(port=='0')
+            {
+                if((PORTB.Pins&1)==0)
+                {
+                    changePinPortB(0,HIGH);
+                }
+                else
+                {
+                    changePinPortB(0,LOW);
+                }
+            }
+            if(port=='1')
+            {
+                if((PORTB.Pins&1<<1)==0)
+                {
+                    changePinPortB(1,HIGH);
+                }
+                else
+                {
+                    changePinPortB(1,LOW);
+                }
+            }
+            if(port=='2')
+            {
+                if((PORTB.Pins&1<<2)==0)
+                {
+                    changePinPortB(2,HIGH);
+                }
+                else
+                {
+                    changePinPortB(2,LOW);
+                }
+            }
+            if(port=='3')
+            {
+                if((PORTB.Pins&1<<3)==0)
+                {
+                    changePinPortB(3,HIGH);
+                }
+                else
+                {
+                    changePinPortB(3,LOW);
+                }
+            }
+            if(port=='4')
+            {
+                if((PORTB.Pins&1<<4)==0)
+                {
+                    changePinPortB(4,HIGH);
+                }
+                else
+                {
+                    changePinPortB(4,LOW);
+                }
+            }
+            if(port=='5')
+            {
+                if((PORTB.Pins&1<<5)==0)
+                {
+                    changePinPortB(5,HIGH);
+                }
+                else
+                {
+                    changePinPortB(5,LOW);
+                }
+            }
+            if(port=='6')
+            {
+                if((PORTB.Pins&1<<6)==0)
+                {
+                    changePinPortB(6,HIGH);
+                }
+                else
+                {
+                    changePinPortB(6,LOW);
+                }
+            }
+
+            if(port=='7')
+            {
+                if((PORTB.Pins&1<<7)==0)
+                {
+                    changePinPortB(7,HIGH);
+                }
+                else
+                {
+                    changePinPortB(7,LOW);
+                }
             }
         }
     }
