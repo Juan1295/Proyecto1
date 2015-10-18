@@ -1,6 +1,6 @@
 #include <stdlib.h>
 #include "decoder.h"
-#include <curses.h>
+#include "curses.h"
 #include "funciones.h"
 #include "flags.h"
 #include "micros.h"
@@ -46,7 +46,6 @@ int main(void)
     {
         reg[j]=0;
     }
-
     j=0;
     reg[13]=256;
     struct flg banderas;
@@ -76,7 +75,7 @@ int main(void)
 	printw("Emulador Cortex-M0");
 	attroff(COLOR_PAIR(1));	/* Deshabilita los colores Pair 2 */
 
-    registro(reg,dim,&banderas);
+
 
     border( ACS_VLINE, ACS_VLINE,
             ACS_HLINE, ACS_HLINE,
@@ -86,30 +85,31 @@ int main(void)
 
     while(ch!='q')
     {
-        clear();
-        initIO();showPorts();
-        border( ACS_VLINE, ACS_VLINE,
-        ACS_HLINE, ACS_HLINE,
-        ACS_ULCORNER, ACS_URCORNER,
-        ACS_LLCORNER, ACS_LRCORNER	);
+
+
+        ch=getch();
+        refresh();
+        move(2,34);
+        printw("Emulador Cortex-M0");
+        initIO();showPorts();//
         registro(reg,dim,&banderas);//Muestra los registros y las banderas en pantalla
         move(5,10);
         printw("Presione Q para salir");
-        Mostrar_memoria(memoria,256);//Se llama la funcion que muestra la memoria en pantalla.
         move(9,10);
         printw("%s",instructions[reg[15]]);//Imprime la instruccion
+        Mostrar_memoria(memoria,256);//Se llama la funcion que muestra la memoria en pantalla.
+        instruction = getInstruction(instructions[reg[15]]); // Instrucción en la posición reg[15]
+        decodeInstruction(instruction,reg,&banderas,memoria,&comando); // Debe ser modificada de acuerdo a cada código
+        move (8,10);
+        printw("0x%0.4X",comando);
         move(19,65);
         printw("PC=%u",reg[15]*2);//Imprime el registro
         move(17,75);
         printw("LR=%u",reg[14]*2);//Imprime el registro
         move(19,75);
         printw("SP=%X",reg[13]);
-        ch=getch();// Espera una tecla para continuar
-        instruction = getInstruction(instructions[reg[15]]); // Instrucción en la posición reg[15]
-        decodeInstruction(instruction,reg,&banderas,memoria,&comando); // Debe ser modificada de acuerdo a cada código
-		move (9,30);
-        printw("0x%0.4X",comando);
         NVIC(irq,&bn,reg,&banderas,memoria);
+
     }
 
     /* Ejemplo de uso

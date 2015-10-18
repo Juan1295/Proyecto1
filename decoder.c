@@ -40,19 +40,19 @@ void decodeInstruction(instruction_t instruction, uint32_t *reg,struct flg *band
         if(instruction.op2_type == '#')//Se compara el tipo de dato en el operando 3
         {
             CMP(*(reg+instruction.op1_value),instruction.op2_value,banderas);//Se llama la instruccion CMP
-            *comando=(5<<11)+(7&(instruction.op1_value)<<8)+(255&(instruction.op2_value));
+            *comando=(5<<11)+((7&(instruction.op1_value))<<8)+(255&(instruction.op2_value));
         }
 
         if(instruction.op2_type == 'R')//Se compara el tipo de dato en el operando 3
         {
           if(instruction.op1_value<=7&&instruction.op2_value<=7)
             {
-              *comando=(266<<6)+(7&(instruction.op1_value)<<3)+(7&(instruction.op2_value));// Se verifica si el registro es de 0 a 7
+              *comando=(266<<6)+((7&(instruction.op1_value))<<3)+(7&(instruction.op2_value));// Se verifica si el registro es de 0 a 7
             }
 
             else
             {
-                *comando=(69<<8)+(8&(instruction.op1_value)<<8)+(15&(instruction.op2_value)<<7)+(7&(instruction.op1_value));
+                *comando=(69<<8)+((8&(instruction.op1_value))<<8)+((15&(instruction.op2_value))<<7)+(7&(instruction.op1_value));
             }
             CMP(*(reg+instruction.op1_value),*(reg+instruction.op2_value),banderas);//Se llama la instruccion CMP
         }
@@ -66,7 +66,7 @@ void decodeInstruction(instruction_t instruction, uint32_t *reg,struct flg *band
 
         if(instruction.op3_type == 'R'){//Se compara el tipo de dato en el operando 3
             AND((reg+instruction.op1_value),*(reg+instruction.op2_value),*(reg+instruction.op3_value),banderas);//Se llama la instruccion ANDS
-            *comando=(256<<6)+(7&(instruction.op2_value)<<3)+(7&(instruction.op1_value));
+            *comando=(256<<6)+((7&(instruction.op2_value))<<3)+(7&(instruction.op1_value));
         }
 	}
     if( strcmp(instruction.mnemonic,"ORR") == 0 ){
@@ -76,7 +76,7 @@ void decodeInstruction(instruction_t instruction, uint32_t *reg,struct flg *band
 		*(reg+15)=*(reg+15)+1;
         if(instruction.op3_type == 'R'){//Se compara el tipo de dato en el operando 3
             ORR((reg+instruction.op1_value),*(reg+instruction.op2_value),*(reg+instruction.op3_value),banderas);//Se llama la instruccion ORR
-            *comando=(268<<6)+(7&(instruction.op2_value)<<3)+(7&(instruction.op1_value));
+            *comando=(268<<6)+((7&(instruction.op2_value))<<3)+(7&(instruction.op1_value));
         }
 	}
     if( strcmp(instruction.mnemonic,"EOR") == 0 ){
@@ -87,7 +87,7 @@ void decodeInstruction(instruction_t instruction, uint32_t *reg,struct flg *band
 
         if(instruction.op3_type == 'R'){//Se compara el tipo de dato en el operando 3
             EOR((reg+instruction.op1_value),*(reg+instruction.op2_value),*(reg+instruction.op3_value),banderas);//Se llama la instruccion EOR
-            *comando=(257<<6)+(7&(instruction.op2_value)<<3)+(7&(instruction.op1_value));
+            *comando=(257<<6)+((7&(instruction.op2_value))<<3)+(7&(instruction.op1_value));
         }
 	}
     if( strcmp(instruction.mnemonic,"SUBS") == 0 ){
@@ -97,16 +97,16 @@ void decodeInstruction(instruction_t instruction, uint32_t *reg,struct flg *band
 		*(reg+15)=*(reg+15)+1;
         if(instruction.op3_type == '#'){//Se compara el tipo de dato en el operando 3
             SUB((reg+instruction.op1_value),*(reg+instruction.op2_value),instruction.op3_value,banderas);//Se llama la instruccion SUB
-            *comando=(15<<9)+(7&(instruction.op3_value)<<6)+(7&(instruction.op2_value)<<3)+(7&(instruction.op1_value));
+            *comando=(15<<9)+((7&(instruction.op3_value))<<6)+((7&(instruction.op2_value))<<3)+(7&(instruction.op1_value));
         }
         if(instruction.op3_type =='N'&&instruction.op2_type == '#')
         {
            SUB((reg+instruction.op1_value),*(reg+instruction.op1_value),instruction.op2_value,banderas);//Se llama la instruccion SUB
-            *comando=(7<<11)+(7&(instruction.op1_value)<<6)+(15&(instruction.op2_value));
+            *comando=(7<<11)+((7&(instruction.op1_value))<<6)+(15&(instruction.op2_value));
         }
         if(instruction.op3_type == 'R'){//Se compara el tipo de dato en el operando 3
             SUB((reg+instruction.op1_value),*(reg+instruction.op2_value),*(reg+instruction.op3_value),banderas);//Se llama la instruccion SUB
-            *comando=(13<<9)+(7&(instruction.op3_value)<<6)+(7&(instruction.op2_value)<<3)+(7&(instruction.op1_value));
+            *comando=(13<<9)+((7&(instruction.op3_value))<<6)+((7&(instruction.op2_value))<<3)+(7&(instruction.op1_value));
         }
 	}
 	if( strcmp(instruction.mnemonic,"ADDS") == 0 ){
@@ -116,21 +116,21 @@ void decodeInstruction(instruction_t instruction, uint32_t *reg,struct flg *band
 		*(reg+15)=*(reg+15)+1;
         if(instruction.op3_type == '#'){//Se compara el tipo de dato en el operando 3
             ADD((reg+instruction.op1_value),*(reg+instruction.op2_value),instruction.op3_value,banderas);//Se llama la instruccion ADD
-            *comando=(14<<9)+(7&(instruction.op3_value)<<6)+(7&(instruction.op2_value)<<3)+(7&(instruction.op1_value));
+            *comando=(14<<9)+((7&(instruction.op3_value))<<6)+((7&(instruction.op2_value))<<3)+(7&(instruction.op1_value));
         }
         if(instruction.op3_type == 'R'){//Se compara el tipo de dato en el operando 3
             ADD((reg+instruction.op1_value),*(reg+instruction.op2_value),*(reg+instruction.op3_value),banderas);//Se llama la instruccion ADD
-            *comando=(12<<9)+(7&(instruction.op3_value)<<6)+(7&(instruction.op2_value)<<3)+(7&(instruction.op1_value));
+            *comando=(12<<9)+((7&(instruction.op3_value))<<6)+((7&(instruction.op2_value))<<3)+(7&(instruction.op1_value));
         }
         if(instruction.op3_type =='N'&&instruction.op2_type == '#')
         {
            ADD((reg+instruction.op1_value),*(reg+instruction.op1_value),instruction.op2_value,banderas);//Se llama la instruccion SUB
-            *comando=(7<<11)+(7&(instruction.op1_value)<<6)+(15&(instruction.op2_value));
+            *comando=(7<<11)+((7&(instruction.op1_value))<<6)+(15&(instruction.op2_value));
         }
         if(instruction.op3_type == 'N'&&instruction.op2_type == 'R')
         {
             ADD((reg+instruction.op1_value),*(reg+instruction.op1_value),*(reg+instruction.op2_value),banderas);
-            *comando=(68<<8)+(8&(instruction.op1_value)<<7)+(15&(instruction.op2_value)<<3)+(7&(instruction.op1_value));
+            *comando=(68<<8)+((8&(instruction.op1_value))<<7)+((15&(instruction.op2_value))<<3)+(7&(instruction.op1_value));
         }
 
 	}
@@ -142,7 +142,7 @@ void decodeInstruction(instruction_t instruction, uint32_t *reg,struct flg *band
 		*(reg+15)=*(reg+15)+1;
         if(instruction.op3_type == 'R'){//Se compara el tipo de dato en el operando 3
             ADC((reg+instruction.op1_value),*(reg+instruction.op2_value),*(reg+instruction.op3_value),banderas->carry,banderas);//Se llama la instruccion ADC
-            *comando=(261<<6)+(7&(instruction.op2_value)<<3)+(7&(instruction.op1_value));
+            *comando=(261<<6)+((7&(instruction.op2_value))<<3)+(7&(instruction.op1_value));
         }
 	}
     if( strcmp(instruction.mnemonic,"CMN") == 0 ){
@@ -152,7 +152,7 @@ void decodeInstruction(instruction_t instruction, uint32_t *reg,struct flg *band
 		*(reg+15)=*(reg+15)+1;
         if(instruction.op2_type == 'R'){//Se compara el tipo de dato en el operando 3
             {
-              *comando=(267<<6)+(7&(instruction.op1_value)<<3)+(7&(instruction.op2_value));
+              *comando=(267<<6)+((7&(instruction.op1_value))<<3)+(7&(instruction.op2_value));
             CMN(*(reg+instruction.op1_value),*(reg+instruction.op2_value),banderas);//Se llama la instruccion CMP
 
             }
@@ -166,7 +166,7 @@ void decodeInstruction(instruction_t instruction, uint32_t *reg,struct flg *band
 		*(reg+15)=*(reg+15)+1;
         if(instruction.op3_type == 'R'){//Se compara el tipo de dato en el operando 3
             MUL((reg+instruction.op1_value),*(reg+instruction.op2_value),*(reg+instruction.op3_value),banderas);//Se llama la instruccion MUL
-            *comando=(269<<6)+(7&(instruction.op2_value)<<3)+(7&(instruction.op1_value));
+            *comando=(269<<6)+((7&(instruction.op2_value))<<3)+(7&(instruction.op1_value));
         }
 	}
     if( strcmp(instruction.mnemonic,"TST") == 0 ){
@@ -176,7 +176,7 @@ void decodeInstruction(instruction_t instruction, uint32_t *reg,struct flg *band
 		*(reg+15)=*(reg+15)+1;
         if(instruction.op2_type == 'R'){//Se compara el tipo de dato en el operando 3
             TST(*(reg+instruction.op1_value),*(reg+instruction.op2_value),banderas);//Se llama la instruccion TST
-            *comando=(264<<6)+(7&(instruction.op2_value)<<3)+(7&(instruction.op1_value));
+            *comando=(264<<6)+((7&(instruction.op2_value))<<3)+(7&(instruction.op1_value));
         }
 	}
     if( strcmp(instruction.mnemonic,"LSLS") == 0 ){
@@ -186,11 +186,11 @@ void decodeInstruction(instruction_t instruction, uint32_t *reg,struct flg *band
 		*(reg+15)=*(reg+15)+1;
         if(instruction.op2_type == '#'){//Se compara el tipo de dato en el operando 3
             LSL((reg+instruction.op1_value),instruction.op2_value,banderas);//Se llama la instruccion LSL
-            *comando=(0<<11)+(31&(instruction.op3_value)<<6)+(7&(instruction.op2_value)<<3)+(7&(instruction.op1_value));
+            *comando=(0<<11)+((31&(instruction.op3_value))<<6)+((7&(instruction.op2_value))<<3)+(7&(instruction.op1_value));
         }
         if(instruction.op2_type == 'R'){//Se compara el tipo de dato en el operando 3
             LSL((reg+instruction.op1_value),*(reg+instruction.op2_value),banderas);//Se llama la instruccion LSL
-            *comando=(258<<6)+(7&(instruction.op2_value)<<3)+(7&(instruction.op1_value));
+            *comando=(258<<6)+((7&(instruction.op2_value))<<3)+(7&(instruction.op1_value));
         }
 	}
 
@@ -201,11 +201,11 @@ void decodeInstruction(instruction_t instruction, uint32_t *reg,struct flg *band
 		*(reg+15)=*(reg+15)+1;
         if(instruction.op2_type == '#'){//Se compara el tipo de dato en el operando 3
             LSR((reg+instruction.op1_value),instruction.op2_value,banderas);//Se llama la instruccion LSR
-            *comando=(1<<11)+(31&(instruction.op3_value)<<6)+(7&(instruction.op2_value)<<3)+(7&(instruction.op1_value));
+            *comando=(1<<11)+((31&(instruction.op3_value))<<6)+((7&(instruction.op2_value))<<3)+(7&(instruction.op1_value));
         }
         if(instruction.op2_type == 'R'){//Se compara el tipo de dato en el operando 3
             LSR((reg+instruction.op1_value),*(reg+instruction.op2_value),banderas);//Se llama la instruccion LSR
-            *comando=(259<<6)+(7&(instruction.op2_value)<<3)+(7&(instruction.op1_value));
+            *comando=(259<<6)+((7&(instruction.op2_value))<<3)+(7&(instruction.op1_value));
         }
 	}
 
@@ -216,7 +216,7 @@ void decodeInstruction(instruction_t instruction, uint32_t *reg,struct flg *band
 		*(reg+15)=*(reg+15)+1;
         if(instruction.op2_type == 'R'){//Se compara el tipo de dato en el operando 3
             ROR((reg+instruction.op1_value),*(reg+instruction.op2_value),banderas);//Se llama la instruccion ROR
-            *comando=(263<<6)+(7&(instruction.op2_value)<<3)+(7&(instruction.op1_value));
+            *comando=(263<<6)+((7&(instruction.op2_value))<<3)+(7&(instruction.op1_value));
         }
 	}
 
@@ -227,11 +227,11 @@ void decodeInstruction(instruction_t instruction, uint32_t *reg,struct flg *band
 		*(reg+15)=*(reg+15)+1;
         if(instruction.op2_type == '#'){//Se compara el tipo de dato en el operando 3
             ASR((reg+instruction.op1_value),instruction.op2_value,banderas);//Se llama la instruccion ASR
-            *comando=(2<<11)+(31&(instruction.op3_value)<<6)+(7&(instruction.op2_value)<<3)+(7&(instruction.op1_value));
+            *comando=(2<<11)+((31&(instruction.op3_value))<<6)+((7&(instruction.op2_value))<<3)+(7&(instruction.op1_value));
         }
         if(instruction.op2_type == 'R')//Se compara el tipo de dato en el operando 3
             ASR((reg+instruction.op1_value),*(reg+instruction.op2_value),banderas);//Se llama la instruccion ASR
-            *comando=(260<<6)+(7&(instruction.op2_value)<<3)+(7&(instruction.op1_value));
+            *comando=(260<<6)+((7&(instruction.op2_value))<<3)+(7&(instruction.op1_value));
 	}
 
     if( strcmp(instruction.mnemonic,"BIC") == 0 ){
@@ -241,7 +241,7 @@ void decodeInstruction(instruction_t instruction, uint32_t *reg,struct flg *band
 		*(reg+15)=*(reg+15)+1;
         if(instruction.op2_type == 'R'){//Se compara el tipo de dato en el operando 2
             BIC((reg+instruction.op1_value),*(reg+instruction.op2_value),banderas);//Se llama la instruccion BIC
-            *comando=(270<<6)+(7&(instruction.op2_value)<<3)+(7&(instruction.op1_value));
+            *comando=(270<<6)+((7&(instruction.op2_value))<<3)+(7&(instruction.op1_value));
         }
 	}
 
@@ -252,7 +252,7 @@ void decodeInstruction(instruction_t instruction, uint32_t *reg,struct flg *band
 		*(reg+15)=*(reg+15)+1;
         if(instruction.op2_type == 'R'){//Se compara el tipo de dato en el operando 2
             MVN((reg+instruction.op1_value),*(reg+instruction.op2_value),banderas);//Se llama la instruccion ASR
-            *comando=(271<<6)+(7&(instruction.op2_value)<<3)+(7&(instruction.op1_value));
+            *comando=(271<<6)+((7&(instruction.op2_value))<<3)+(7&(instruction.op1_value));
         }
 	}
 
@@ -267,7 +267,7 @@ void decodeInstruction(instruction_t instruction, uint32_t *reg,struct flg *band
         }
         if(instruction.op2_type == 'R'){//Se compara el tipo de dato en el operando 2
             RSB((reg+instruction.op1_value),*(reg+instruction.op2_value),banderas);//Se llama la instruccion RSB
-            *comando=(265<<6)+(7&(instruction.op2_value)<<3)+(7&(instruction.op1_value));
+            *comando=(265<<6)+((7&(instruction.op2_value))<<3)+(7&(instruction.op1_value));
         }
 	}
 
@@ -278,7 +278,7 @@ void decodeInstruction(instruction_t instruction, uint32_t *reg,struct flg *band
 		*(reg+15)=*(reg+15)+1;
         if(instruction.op2_type == 'R'){//Se compara el tipo de dato en el operando 2
             REV((reg+instruction.op1_value),*(reg+instruction.op2_value),banderas);//Se llama la instruccion REV
-            *comando=(744<<6)+(7&(instruction.op2_value)<<3)+(7&(instruction.op1_value));
+            *comando=(744<<6)+((7&(instruction.op2_value))<<3)+(7&(instruction.op1_value));
         }
 	}
 
@@ -298,7 +298,7 @@ void decodeInstruction(instruction_t instruction, uint32_t *reg,struct flg *band
 		*(reg+15)=*(reg+15)+1;
         if(instruction.op2_type == 'R'){//Se compara el tipo de dato en el operando 2
             REV16((reg+instruction.op1_value),*(reg+instruction.op2_value),banderas);//Se llama la instruccion REV16
-            *comando=(745<<6)+(7&(instruction.op2_value)<<3)+(7&(instruction.op1_value));
+            *comando=(745<<6)+((7&(instruction.op2_value))<<3)+(7&(instruction.op1_value));
         }
 	}
     if( strcmp(instruction.mnemonic,"REVSH") == 0 ){
@@ -309,7 +309,7 @@ void decodeInstruction(instruction_t instruction, uint32_t *reg,struct flg *band
         if(instruction.op2_type == 'R')//Se compara el tipo de dato en el operando 2
         {
             REVSH((reg+instruction.op1_value),*(reg+instruction.op2_value),banderas);//Se llama la instruccion REVSH
-            *comando=(747<<6)+(7&(instruction.op2_value)<<3)+(7&(instruction.op1_value));
+            *comando=(747<<6)+((7&(instruction.op2_value))<<3)+(7&(instruction.op1_value));
         }
 	}
 
@@ -321,7 +321,7 @@ void decodeInstruction(instruction_t instruction, uint32_t *reg,struct flg *band
 		// ... Igual para los otros operandos
         if(instruction.op1_type == 'R'){//Se compara el tipo de dato en el operando 2
             BX((reg+15),*(reg+instruction.op1_value));//Se llama la instruccion BX
-            *comando=(142<<7)+(15&(instruction.op1_value<<3))+(7&(0));
+            *comando=(142<<7)+((15&(instruction.op1_value)<<3))+(7&(0));
         }
         if(instruction.op1_type== 'L'){
             BX((reg+15),*(reg+14));//Se llama la instruccion BX
@@ -366,11 +366,11 @@ void decodeInstruction(instruction_t instruction, uint32_t *reg,struct flg *band
 
         if(instruction.op1_type == 'R'){//Se compara el tipo de dato en el operando 2
             BLX((reg+15),*(reg+instruction.op1_value),(reg+14));//Se llama la instruccion BLX
-            *comando=(143<<7)+(15&(instruction.op1_value<<3))+(7&(0));
+            *comando=(143<<7)+((15&(instruction.op1_value)<<3))+(7&(0));
         }
         if(instruction.op1_type== 'L'){
             BX((reg+15),*(reg+14));//Se llama la instruccion BLX
-            *comando=(143<<7)+(15&(instruction.op1_value<<3))+(7&(0));
+            *comando=(143<<7)+((15&(instruction.op1_value)<<3))+(7&(0));
         }
 	}
 
@@ -525,7 +525,7 @@ void decodeInstruction(instruction_t instruction, uint32_t *reg,struct flg *band
 		// instruction.op1_type  --> Tipo primer operando (R->Registro #->Numero N->Ninguno)
 		// ... Igual para los otros operandos
 		PUSH(mem,reg,instruction.registers_list);
-		for(i=0;i<16;i++)
+		for(i=0;i<8;i++)
         {
             aux=aux+(instruction.registers_list[i]<<i);
         }
@@ -540,7 +540,7 @@ void decodeInstruction(instruction_t instruction, uint32_t *reg,struct flg *band
 		// instruction.op1_type  --> Tipo primer operando (R->Registro #->Numero N->Ninguno)
 		// ... Igual para los otros operandos
             POP(mem,reg,instruction.registers_list);
-            for(i=0;i<16;i++)
+            for(i=0;i<8;i++)
             {
                 aux=aux+(instruction.registers_list[i]<<i);
             }
@@ -563,7 +563,7 @@ void decodeInstruction(instruction_t instruction, uint32_t *reg,struct flg *band
                 if(instruction.op3_value<256)//Se evalua que el inmediato sea de 8 bits
                 {
                     LDR((reg+instruction.op1_value),*(reg+13),(instruction.op3_value<<2),mem);
-                    *comando=(19<<11)+(7&(instruction.op1_value)<<8)+(255&(instruction.op3_value));
+                    *comando=(19<<11)+((7&(instruction.op1_value))<<8)+(255&(instruction.op3_value));
                 }
             }
             if(instruction.op2_type == 'P')//LDR que trabaja con pc
@@ -578,14 +578,14 @@ void decodeInstruction(instruction_t instruction, uint32_t *reg,struct flg *band
                 if(instruction.op3_type == 'R')//LDR que trabaja con dos registros
                 {
                     LDR((reg+instruction.op1_value),*(reg+instruction.op2_value),*(reg+instruction.op3_value),mem);
-                    *comando=(44<<9)+(7&(instruction.op3_value)<<6)+(7&(instruction.op2_value)<<3)+(7&(instruction.op1_value));
+                    *comando=(44<<9)+((7&(instruction.op3_value))<<6)+((7&(instruction.op2_value))<<3)+(7&(instruction.op1_value));
                 }
                 else//LDR que trabaja con un registro y un inmediato de 5 bits
                 {
                     if(instruction.op3_value<32)//Se evalua que el inmediato sea de 5 bits
                     {
                         LDR((reg+instruction.op1_value),*(reg+instruction.op2_value),(instruction.op3_value<<2),mem);
-                        *comando=(13<<11)+(31&(instruction.op3_value)<<6)+(7&(instruction.op2_value)<<3)+(7&(instruction.op1_value));
+                        *comando=(13<<11)+((31&(instruction.op3_value))<<6)+((7&(instruction.op2_value))<<3)+(7&(instruction.op1_value));
                     }
                 }
             }
@@ -601,14 +601,14 @@ void decodeInstruction(instruction_t instruction, uint32_t *reg,struct flg *band
                 if(instruction.op3_value<32)//Se evalua que el inmediato sea de 5 bits
                 {
                     LDRB((reg+instruction.op1_value),*(reg+instruction.op2_value),instruction.op3_value,mem);
-                    *comando=(15<<11)+(31&(instruction.op3_value)<<6)+(7&(instruction.op2_value)<<3)+(7&(instruction.op1_value));
+                    *comando=(15<<11)+((31&(instruction.op3_value))<<6)+((7&(instruction.op2_value))<<3)+(7&(instruction.op1_value));
 
                 }
             }
             if((instruction.op2_type == 'R')&&(instruction.op3_type == 'R'))//LDRB entre registros
             {
                 LDRB((reg+instruction.op1_value),*(reg+instruction.op2_value),*(reg+instruction.op3_value),mem);
-                *comando=(46<<9)+(7&(instruction.op3_value)<<6)+(7&(instruction.op2_value)<<3)+(7&(instruction.op1_value));
+                *comando=(46<<9)+((7&(instruction.op3_value))<<6)+((7&(instruction.op2_value))<<3)+(7&(instruction.op1_value));
             }
         }
         if( strcmp(instruction.mnemonic,"LDRH") == 0 )
@@ -622,14 +622,14 @@ void decodeInstruction(instruction_t instruction, uint32_t *reg,struct flg *band
                 if(instruction.op3_value<32)//Se evalua que el inmediato sea de 5 bits
                 {
                     LDRH((reg+instruction.op1_value),*(reg+instruction.op2_value),(instruction.op3_value<<1),mem);
-                    *comando=(17<<11)+(31&(instruction.op3_value)<<6)+(7&(instruction.op2_value)<<3)+(7&(instruction.op1_value));
+                    *comando=(17<<11)+((31&(instruction.op3_value))<<6)+((7&(instruction.op2_value))<<3)+(7&(instruction.op1_value));
 
                 }
             }
             if((instruction.op2_type == 'R')&&(instruction.op3_type == 'R'))//LDRH entre registros
             {
                 LDRH((reg+instruction.op1_value),*(reg+instruction.op2_value),*(reg+instruction.op3_value),mem);
-                *comando=(45<<9)+(7&(instruction.op3_value)<<6)+(7&(instruction.op2_value)<<3)+(7&(instruction.op1_value));
+                *comando=(45<<9)+((7&(instruction.op3_value))<<6)+((7&(instruction.op2_value))<<3)+(7&(instruction.op1_value));
             }
         }
         if( strcmp(instruction.mnemonic,"LDRSB") == 0 )
@@ -641,7 +641,7 @@ void decodeInstruction(instruction_t instruction, uint32_t *reg,struct flg *band
             if((instruction.op2_type == 'R')&&(instruction.op3_type == 'R'))//LDRSB
             {
                 LDRSB((reg+instruction.op1_value),*(reg+instruction.op2_value),*(reg+instruction.op3_value),mem);
-                *comando=(43<<9)+(7&(instruction.op3_value)<<6)+(7&(instruction.op2_value)<<3)+(7&(instruction.op1_value));
+                *comando=(43<<9)+((7&(instruction.op3_value))<<6)+((7&(instruction.op2_value))<<3)+(7&(instruction.op1_value));
             }
         }
         if( strcmp(instruction.mnemonic,"LDRSH") == 0 )
@@ -653,7 +653,7 @@ void decodeInstruction(instruction_t instruction, uint32_t *reg,struct flg *band
             if((instruction.op2_type == 'R')&&(instruction.op3_type == 'R'))//LDRSH entre registros
             {
                 LDRSH((reg+instruction.op1_value),*(reg+instruction.op2_value),*(reg+instruction.op3_value),mem);
-                *comando=(47<<9)+(7&(instruction.op3_value)<<6)+(7&(instruction.op2_value)<<3)+(7&(instruction.op1_value));
+                *comando=(47<<9)+((7&(instruction.op3_value))<<6)+((7&(instruction.op2_value))<<3)+(7&(instruction.op1_value));
             }
         }
         if( strcmp(instruction.mnemonic,"STR") == 0 )
@@ -667,20 +667,20 @@ void decodeInstruction(instruction_t instruction, uint32_t *reg,struct flg *band
                 if(instruction.op3_value<32)//Se evalua que el inmediato sea de 5 bits
                 {
                     STR(*(reg+instruction.op1_value),*(reg+instruction.op2_value),(instruction.op3_value<<2),mem);
-                    *comando=(12<<11)+(31&(instruction.op3_value)<<6)+(7&(instruction.op2_value)<<3)+(7&(instruction.op1_value));
+                    *comando=(12<<11)+((31&(instruction.op3_value))<<6)+((7&(instruction.op2_value))<<3)+(7&(instruction.op1_value));
                 }
             }
             if((instruction.op2_type == 'R')&&(instruction.op3_type == 'R'))//STR entre registros
             {
                 STR(*(reg+instruction.op1_value),*(reg+instruction.op2_value),*(reg+instruction.op3_value),mem);
-                *comando=(40<<9)+(7&(instruction.op3_value)<<6)+(7&(instruction.op2_value)<<3)+(7&(instruction.op1_value));
+                *comando=(40<<9)+((7&(instruction.op3_value))<<6)+((7&(instruction.op2_value))<<3)+(7&(instruction.op1_value));
             }
             if((instruction.op2_type == 'S')&&(instruction.op3_type == '#'))//STR entre sp e inmediato de 8 bits
             {
                 if(instruction.op3_value<256)//Se evalua que el inmediato sea de 8 bits
                 {
                     STR(*(reg+instruction.op1_value),*(reg+instruction.op2_value),(instruction.op3_value<<2),mem);
-                    *comando=(18<<11)+(7&(instruction.op1_value)<<8)+(255&(instruction.op3_value));
+                    *comando=(18<<11)+((7&(instruction.op1_value))<<8)+(255&(instruction.op3_value));
                 }
             }
         }
@@ -695,13 +695,13 @@ void decodeInstruction(instruction_t instruction, uint32_t *reg,struct flg *band
                 if(instruction.op3_value<32)//Se evalua que el inmediato sea de 5 bits
                 {
                     STRB(*(reg+instruction.op1_value),*(reg+instruction.op2_value),instruction.op3_value,mem);
-                    *comando=(14<<11)+(31&(instruction.op3_value)<<6)+(7&(instruction.op2_value)<<3)+(7&(instruction.op1_value));
+                    *comando=(14<<11)+((31&(instruction.op3_value))<<6)+((7&(instruction.op2_value))<<3)+(7&(instruction.op1_value));
                 }
             }
             if((instruction.op2_type == 'R')&&(instruction.op3_type == 'R'))//STR entre registros
             {
                 STRB(*(reg+instruction.op1_value),*(reg+instruction.op2_value),*(reg+instruction.op3_value),mem);
-                *comando=(42<<9)+(7&(instruction.op3_value)<<6)+(7&(instruction.op2_value)<<3)+(7&(instruction.op1_value));
+                *comando=(42<<9)+((7&(instruction.op3_value))<<6)+((7&(instruction.op2_value))<<3)+(7&(instruction.op1_value));
             }
         }
         if( strcmp(instruction.mnemonic,"STRH") == 0 )
@@ -715,13 +715,13 @@ void decodeInstruction(instruction_t instruction, uint32_t *reg,struct flg *band
                 if(instruction.op3_value<32)//Se evalua que el inmediato sea de 5 bits
                 {
                     STRH(*(reg+instruction.op1_value),*(reg+instruction.op2_value),instruction.op3_value,mem);
-                    *comando=(16<<11)+(31&(instruction.op3_value)<<6)+(7&(instruction.op2_value)<<3)+(7&(instruction.op1_value));
+                    *comando=(16<<11)+((31&(instruction.op3_value))<<6)+((7&(instruction.op2_value))<<3)+(7&(instruction.op1_value));
                 }
             }
             if((instruction.op2_type == 'R')&&(instruction.op3_type == 'R'))//STR entre registros
             {
                 STRH(*(reg+instruction.op1_value),*(reg+instruction.op2_value),*(reg+instruction.op3_value),mem);
-                *comando=(41<<9)+(7&(instruction.op3_value)<<6)+(7&(instruction.op2_value)<<3)+(7&(instruction.op1_value));
+                *comando=(41<<9)+((7&(instruction.op3_value))<<6)+((7&(instruction.op2_value))<<3)+(7&(instruction.op1_value));
             }
         }
 }
