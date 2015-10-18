@@ -1,8 +1,9 @@
 #include "decoder.h"
-
+#include "io.h"
 
 void decodeInstruction(instruction_t instruction, uint32_t *reg,struct flg *banderas,uint8_t *mem,uint16_t *comando)
 {
+    uint8_t aux;
 	if( strcmp(instruction.mnemonic,"MOVS") == 0 ){
 		// instruction.op1_value --> Valor primer operando
 		// instruction.op1_type  --> Tipo primer operando (R->Registro #->Numero N->Ninguno)
@@ -600,15 +601,32 @@ void decodeInstruction(instruction_t instruction, uint32_t *reg,struct flg *band
             {
                 if(instruction.op3_value<32)//Se evalua que el inmediato sea de 5 bits
                 {
-                    LDRB((reg+instruction.op1_value),*(reg+instruction.op2_value),instruction.op3_value,mem);
-                    *comando=(15<<11)+((31&(instruction.op3_value))<<6)+((7&(instruction.op2_value))<<3)+(7&(instruction.op1_value));
-
+                    if(((*(reg+instruction.op2_value)+instruction.op3_value)>0x20000000)&&((*(reg+instruction.op2_value)+instruction.op3_value)<0x40000000))
+                    {
+                        LDRB((reg+instruction.op1_value),*(reg+instruction.op2_value),instruction.op3_value,mem);
+                        *comando=(15<<11)+((31&(instruction.op3_value))<<6)+((7&(instruction.op2_value))<<3)+(7&(instruction.op1_value));
+                    }
+                    else
+                    {
+                        aux=*(reg+instruction.op1_value);
+                        IOAccess((*(reg+instruction.op2_value)+instruction.op3_value),&aux,Read);
+                       *comando=(15<<11)+((31&(instruction.op3_value))<<6)+((7&(instruction.op2_value))<<3)+(7&(instruction.op1_value));
+                    }
                 }
             }
             if((instruction.op2_type == 'R')&&(instruction.op3_type == 'R'))//LDRB entre registros
             {
-                LDRB((reg+instruction.op1_value),*(reg+instruction.op2_value),*(reg+instruction.op3_value),mem);
-                *comando=(46<<9)+((7&(instruction.op3_value))<<6)+((7&(instruction.op2_value))<<3)+(7&(instruction.op1_value));
+                if(((*(reg+instruction.op2_value)+*(reg+instruction.op3_value))>0x20000000)&&((*(reg+instruction.op2_value)+*(reg+instruction.op3_value))<0x40000000))
+                {
+                    LDRB((reg+instruction.op1_value),*(reg+instruction.op2_value),*(reg+instruction.op3_value),mem);
+                    *comando=(46<<9)+((7&(instruction.op3_value))<<6)+((7&(instruction.op2_value))<<3)+(7&(instruction.op1_value));
+                }
+                else
+                {
+                    aux=*(reg+instruction.op1_value);
+                    IOAccess((*(reg+instruction.op2_value)+*(reg+instruction.op3_value)),&aux,Read);
+                   *comando=(46<<9)+((7&(instruction.op3_value))<<6)+((7&(instruction.op2_value))<<3)+(7&(instruction.op1_value));
+                }
             }
         }
         if( strcmp(instruction.mnemonic,"LDRH") == 0 )
@@ -694,14 +712,32 @@ void decodeInstruction(instruction_t instruction, uint32_t *reg,struct flg *band
             {
                 if(instruction.op3_value<32)//Se evalua que el inmediato sea de 5 bits
                 {
-                    STRB(*(reg+instruction.op1_value),*(reg+instruction.op2_value),instruction.op3_value,mem);
-                    *comando=(14<<11)+((31&(instruction.op3_value))<<6)+((7&(instruction.op2_value))<<3)+(7&(instruction.op1_value));
+                    if(((*(reg+instruction.op2_value)+instruction.op3_value)>0x20000000)&&((*(reg+instruction.op2_value)+instruction.op3_value)<0x40000000))
+                    {
+                        STRB(*(reg+instruction.op1_value),*(reg+instruction.op2_value),instruction.op3_value,mem);
+                        *comando=(14<<11)+((31&(instruction.op3_value))<<6)+((7&(instruction.op2_value))<<3)+(7&(instruction.op1_value));
+                    }
+                    else
+                    {
+                        aux=*(reg+instruction.op1_value);
+                        IOAccess((*(reg+instruction.op2_value)+instruction.op3_value),&aux,Write);
+                       *comando=(14<<11)+((31&(instruction.op3_value))<<6)+((7&(instruction.op2_value))<<3)+(7&(instruction.op1_value));
+                    }
                 }
             }
             if((instruction.op2_type == 'R')&&(instruction.op3_type == 'R'))//STR entre registros
             {
-                STRB(*(reg+instruction.op1_value),*(reg+instruction.op2_value),*(reg+instruction.op3_value),mem);
-                *comando=(42<<9)+((7&(instruction.op3_value))<<6)+((7&(instruction.op2_value))<<3)+(7&(instruction.op1_value));
+                if(((*(reg+instruction.op2_value)+*(reg+instruction.op3_value))>0x20000000)&&((*(reg+instruction.op2_value)+*(reg+instruction.op3_value))<0x40000000))
+                {
+                    STRB(*(reg+instruction.op1_value),*(reg+instruction.op2_value),*(reg+instruction.op3_value),mem);
+                    *comando=(42<<9)+((7&(instruction.op3_value))<<6)+((7&(instruction.op2_value))<<3)+(7&(instruction.op1_value));
+                }
+                else
+                {
+                    aux=*(reg+instruction.op1_value);
+                    IOAccess((*(reg+instruction.op2_value)+*(reg+instruction.op3_value)),&aux,Write);
+                    *comando=(42<<9)+((7&(instruction.op3_value))<<6)+((7&(instruction.op2_value))<<3)+(7&(instruction.op1_value));
+                }
             }
         }
         if( strcmp(instruction.mnemonic,"STRH") == 0 )

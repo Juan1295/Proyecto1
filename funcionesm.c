@@ -75,7 +75,7 @@ void POP(uint8_t *mem,uint32_t *reg,uint8_t ord[])
 void LDR(uint32_t *rx,uint32_t num1,uint32_t num2,uint8_t *mem)
 {
     uint32_t dc,i,aux1,aux2,aux3;
-    dc=num1+num2;
+    dc=num1+num2-0x20000000;
     i=255-dc;
     aux1=mem[i-3];
     aux1=(aux1)<<24;
@@ -89,7 +89,7 @@ void LDR(uint32_t *rx,uint32_t num1,uint32_t num2,uint8_t *mem)
 void LDRB(uint32_t *rx,uint32_t num1,uint32_t num2,uint8_t *mem)
 {
     uint32_t dc,i;
-    dc=num1+num2;
+    dc=num1+num2-0x20000000;
     i=255-dc;
     *rx=mem[i];//Guarda en el registro lo encontrado en la direccion de memoria.
 }
@@ -97,7 +97,7 @@ void LDRB(uint32_t *rx,uint32_t num1,uint32_t num2,uint8_t *mem)
 void LDRH(uint32_t *rx,uint32_t num1,uint32_t num2,uint8_t *mem)
 {
     uint32_t dc,i,aux;
-    dc=num1+num2;
+    dc=num1+num2-0x20000000;
     i=255-dc;
     aux=mem[i-1];
     aux=(aux)<<8;
@@ -107,7 +107,7 @@ void LDRH(uint32_t *rx,uint32_t num1,uint32_t num2,uint8_t *mem)
 void LDRSB(uint32_t *rx,uint32_t num1,uint32_t num2,uint8_t *mem)
 {
     uint32_t dc,i,j,aux=0;
-    dc=num1+num2;
+    dc=num1+num2-0x20000000;
     i=255-dc;
     *rx=mem[i];//Guarda en el registro lo encontrado en la direccion de memoria.
     //Extension de signo negativo de manera logica.
@@ -125,7 +125,7 @@ void LDRSB(uint32_t *rx,uint32_t num1,uint32_t num2,uint8_t *mem)
 void LDRSH(uint32_t *rx,uint32_t num1,uint32_t num2,uint8_t *mem)
 {
     uint32_t dc,i,j,aux;
-    dc=num1+num2;
+    dc=num1+num2-0x20000000;
     i=255-dc;
     aux=mem[i-1];
     aux=(aux)<<8;
@@ -147,7 +147,7 @@ void STR(uint32_t rx,uint32_t num1,uint32_t num2,uint8_t *mem)
 {
     int j;//Contador de ciclo for.
     uint32_t aux,aux1,aux2,aux3,aux4,k,dc;
-    dc=num1+num2+4;
+    dc=num1+num2+4-0x20000000;
     k=256-dc;
     aux=0;//Inicializo aux en cero para no contar con basura.
     //Segundo bloque que guarda los bits de ra situados entre el bit 0 y 7.
@@ -191,7 +191,7 @@ void STRB(uint32_t rx,uint32_t num1,uint32_t num2,uint8_t *mem)
 {
     int j;//Contador de ciclo for.
     uint32_t aux,aux1,k,dc;
-    dc=num1+num2;
+    dc=num1+num2-0x20000000;
     k=255-dc;
     aux=0;//Inicializo aux en cero para no contar con basura.
     //Segundo bloque que guarda los bits de ra situados entre el bit 0 y 7.
@@ -208,7 +208,7 @@ void STRH(uint32_t rx,uint32_t num1,uint32_t num2,uint8_t *mem)
 {
     int j;//Contador de ciclo for.
     uint32_t aux,aux1,aux2,k,dc;
-    dc=num1+num2;
+    dc=num1+num2-0x20000000;
     k=255-dc;
     aux=0;//Inicializo aux en cero para no contar con basura.
     //Segundo bloque que guarda los bits de ra situados entre el bit 0 y 7.

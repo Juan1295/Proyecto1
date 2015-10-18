@@ -1,6 +1,6 @@
 #include <stdlib.h>
 #include "decoder.h"
-#include "curses.h"
+#include <curses.h>
 #include "funciones.h"
 #include "flags.h"
 #include "micros.h"
@@ -83,23 +83,22 @@ int main(void)
             ACS_LLCORNER, ACS_LRCORNER	);
     refresh();
 
-    while(ch!='q')
+    while(ch!='s')
     {
-
-
         ch=getch();
-        refresh();
+        clear();
+        instruction = getInstruction(instructions[reg[15]]); // Instrucción en la posición reg[15]
+        decodeInstruction(instruction,reg,&banderas,memoria,&comando); // Debe ser modificada de acuerdo a cada código
+        NVIC(irq,&bn,reg,&banderas,memoria);
         move(2,34);
         printw("Emulador Cortex-M0");
         initIO();showPorts();//
         registro(reg,dim,&banderas);//Muestra los registros y las banderas en pantalla
         move(5,10);
-        printw("Presione Q para salir");
+        printw("Presione S para salir");
         move(9,10);
         printw("%s",instructions[reg[15]]);//Imprime la instruccion
         Mostrar_memoria(memoria,256);//Se llama la funcion que muestra la memoria en pantalla.
-        instruction = getInstruction(instructions[reg[15]]); // Instrucción en la posición reg[15]
-        decodeInstruction(instruction,reg,&banderas,memoria,&comando); // Debe ser modificada de acuerdo a cada código
         move (8,10);
         printw("0x%0.4X",comando);
         move(19,65);
@@ -108,8 +107,13 @@ int main(void)
         printw("LR=%u",reg[14]*2);//Imprime el registro
         move(19,75);
         printw("SP=%X",reg[13]);
-        NVIC(irq,&bn,reg,&banderas,memoria);
-
+        for(i=0;i<16;i++)
+        {
+            if(ch==97+i)
+            {
+                irq[i]=1;
+            }
+        }
     }
 
     /* Ejemplo de uso
