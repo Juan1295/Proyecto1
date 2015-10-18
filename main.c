@@ -1,6 +1,6 @@
 #include <stdlib.h>
 #include "decoder.h"
-#include <curses.h>
+#include "curses.h"
 #include "funciones.h"
 #include "flags.h"
 #include "micros.h"
@@ -86,10 +86,6 @@ int main(void)
     while(ch!='s')
     {
         ch=getch();
-        clear();
-        instruction = getInstruction(instructions[reg[15]]); // Instrucción en la posición reg[15]
-        decodeInstruction(instruction,reg,&banderas,memoria,&comando); // Debe ser modificada de acuerdo a cada código
-        NVIC(irq,&bn,reg,&banderas,memoria);
         move(2,34);
         printw("Emulador Cortex-M0");
         initIO();showPorts();//
@@ -104,9 +100,12 @@ int main(void)
         move(19,65);
         printw("PC=%u",reg[15]*2);//Imprime el registro
         move(17,75);
-        printw("LR=%u",reg[14]*2);//Imprime el registro
+        printw("LR=%u                   ",reg[14]*2);//Imprime el registro
         move(19,75);
         printw("SP=%X",reg[13]);
+        instruction = getInstruction(instructions[reg[15]]); // Instrucción en la posición reg[15]
+        decodeInstruction(instruction,reg,&banderas,memoria,&comando); // Debe ser modificada de acuerdo a cada código
+        NVIC(irq,&bn,reg,&banderas,memoria);
         for(i=0;i<16;i++)
         {
             if(ch==97+i)
