@@ -3,7 +3,7 @@
 
 void decodeInstruction(instruction_t instruction, uint32_t *reg,struct flg *banderas,uint8_t *mem,uint16_t *comando)
 {
-    uint8_t aux;
+    uint8_t aux2,aux3;
 	if( strcmp(instruction.mnemonic,"MOVS") == 0 ){
 		// instruction.op1_value --> Valor primer operando
 		// instruction.op1_type  --> Tipo primer operando (R->Registro #->Numero N->Ninguno)
@@ -608,9 +608,11 @@ void decodeInstruction(instruction_t instruction, uint32_t *reg,struct flg *band
                     }
                     else
                     {
-                        aux=*(reg+instruction.op1_value);
-                        IOAccess((*(reg+instruction.op2_value)+instruction.op3_value),&aux,Read);
+                        aux3=(*(reg+instruction.op2_value)+instruction.op3_value)-0x40000000;
+                        aux2=*(reg+instruction.op1_value);
+                        IOAccess(aux3,&aux2,Read);
                        *comando=(15<<11)+((31&(instruction.op3_value))<<6)+((7&(instruction.op2_value))<<3)+(7&(instruction.op1_value));
+                       *(reg+instruction.op1_value)=aux2;
                     }
                 }
             }
@@ -623,9 +625,11 @@ void decodeInstruction(instruction_t instruction, uint32_t *reg,struct flg *band
                 }
                 else
                 {
-                    aux=*(reg+instruction.op1_value);
-                    IOAccess((*(reg+instruction.op2_value)+*(reg+instruction.op3_value)),&aux,Read);
+                    aux3=(*(reg+instruction.op2_value)+*(reg+instruction.op3_value))-0x40000000;
+                    aux2=*(reg+instruction.op1_value);
+                    IOAccess(aux3,&aux2,Read);
                    *comando=(46<<9)+((7&(instruction.op3_value))<<6)+((7&(instruction.op2_value))<<3)+(7&(instruction.op1_value));
+                   *(reg+instruction.op1_value)=aux2;
                 }
             }
         }
@@ -719,9 +723,11 @@ void decodeInstruction(instruction_t instruction, uint32_t *reg,struct flg *band
                     }
                     else
                     {
-                        aux=*(reg+instruction.op1_value);
-                        IOAccess((*(reg+instruction.op2_value)+instruction.op3_value),&aux,Write);
+                        aux3=(*(reg+instruction.op2_value)+instruction.op3_value)-0x40000000;
+                        aux2=*(reg+instruction.op1_value);
+                        IOAccess(aux3,&aux2,Write);
                        *comando=(14<<11)+((31&(instruction.op3_value))<<6)+((7&(instruction.op2_value))<<3)+(7&(instruction.op1_value));
+                       *(reg+instruction.op1_value)=aux2;
                     }
                 }
             }
@@ -734,9 +740,11 @@ void decodeInstruction(instruction_t instruction, uint32_t *reg,struct flg *band
                 }
                 else
                 {
-                    aux=*(reg+instruction.op1_value);
-                    IOAccess((*(reg+instruction.op2_value)+*(reg+instruction.op3_value)),&aux,Write);
+                    aux3=(*(reg+instruction.op2_value)+*(reg+instruction.op3_value))-0x40000000;
+                    aux2=*(reg+instruction.op1_value);
+                    IOAccess(aux3,&aux2,Write);
                     *comando=(42<<9)+((7&(instruction.op3_value))<<6)+((7&(instruction.op2_value))<<3)+(7&(instruction.op1_value));
+                    *(reg+instruction.op1_value)=aux2;
                 }
             }
         }
